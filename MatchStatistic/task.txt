@@ -1,0 +1,11 @@
+Zaprojektuj interfejs systemu obsługującego mecze drużyn piłkarskich.
+ Interfejs powinien operować metody umożliwiające planowanie meczy między drużynami , przechowywanie ich wyników, 
+ wyliczanie i prezentowanie statystyki dla poszczególnej drużyny, 
+ (np. ile meczy wygranych, ile przegranych, ile remisów, mecze zaplanowane lub przeprowadzone pomiędzy zadanymi datami.
+ Możesz też zaproponować inne metody.
+ Zaimplementuj także metody umożliwiające tworzenie list rankingowych drużyn wg. różnych kryteriów 
+ np. liczby wygranych meczy, alfabetycznie po nazwie drużyny.
+ Zaimplementuj interfejs oraz napisz testy jednostkowe dla tego systemu.
+
+Rozważ użycie klas : Mecz, Drużyna, Zawodnik, wykorzystaj kompozycje, rozważ użycie dziedziczenia.
+Rozważ wykorzystanie typu enum do reprezentacji wyniku meczu.
