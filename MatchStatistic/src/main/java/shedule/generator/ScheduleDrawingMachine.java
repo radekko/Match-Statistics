@@ -50,7 +50,7 @@ public class ScheduleDrawingMachine {
 			List<Pair> oneLigueLine = createOneLigueLine(matchesInSingleLine,allPairs);
 			
 			if(oneLigueLine.size() != matchesInSingleLine) { // lack of good drawing option, undo drawing
-				System.out.println("no good option.");
+//				System.out.println("no good option.");
 				return new TreeMap<>();
 			}
 			else {

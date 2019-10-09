@@ -3,10 +3,14 @@ package before.season.starting;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Teams{
-	List<Team> teams = new ArrayList<>();
+import match.MatchStatistic.TeamRepo;
 
-	public Teams() {
+public class TeamsToDrawing{
+	TeamRepo repo = new TeamRepo();
+	List<Team> teams;
+
+	public TeamsToDrawing() {
+		this.teams = repo.getAllTeams();
 	}
 	
 	public void addTeam(Team team) {
