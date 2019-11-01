@@ -1,4 +1,4 @@
-package match.MatchStatistic;
+package model;
 
 public class Score {
 	Player player;
@@ -19,7 +19,7 @@ public class Score {
 
 	@Override
 	public String toString() {
-		return "Score [player=" + player + ", minute=" + minute + "]";
+		return player + " - minute: " + minute;
 	}
 	
 	

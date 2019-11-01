@@ -1,24 +1,30 @@
-package match.MatchStatistic;
+package beforeStarting;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import before.season.starting.Team;
+import model.Player;
+import model.Team;
 
 public class TeamRepo {
 	List<Team> teams = new ArrayList<>();
 	
 	public TeamRepo() {
-		for (int i = 1; i < 11; i++) {
+		for (int i = 1; i < 5; i++) {
     		
     		List<Player> players = new ArrayList<>();
-    		for (int j = 1; j < 12; j++) {
+    		for (int j = startIndex(i); j < startIndex(i) + 11; j++) {
     			players.add(new Player(j));
     		}
     		
     		Team team = new Team(i, players);
 			teams.add(team);
 		}
+		
+	}
+
+	private int startIndex(int i) {
+		return 10 * i - 10 + i;
 	}
 
 	public List<Team> getAllTeams(){

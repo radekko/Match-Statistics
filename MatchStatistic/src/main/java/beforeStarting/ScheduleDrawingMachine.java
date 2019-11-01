@@ -1,4 +1,4 @@
-package shedule.generator;
+package beforeStarting;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,8 +8,7 @@ import java.util.TreeMap;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import before.season.starting.Pair;
-import before.season.starting.Team;
+import model.Team;
 
 // Working only for small number of teams, around 10
 // More number of teams need better algorithm

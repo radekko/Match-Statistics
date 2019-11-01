@@ -1,13 +1,12 @@
-package shedule.generator;
+package beforeStarting;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import before.season.starting.Pair;
-import before.season.starting.Team;
+import model.Team;
 
-public class PossiblePairsCreator {
+class PossiblePairsCreator {
 
 	public static List<Pair> getAllPairs(List<Team> teams) {
 		List<Pair> allPairs = new ArrayList<Pair>();

@@ -1,13 +1,10 @@
-package match.MatchStatistic;
-
-import before.season.starting.Team;
+package model;
 
 public class Event {
-	
-	Team team;
-	Player player;
-	int minute;
-	EventType eventType;
+	private Team team;
+	private Player player;
+	private int minute;
+	private EventType eventType;
 	
 	public Event(Team team, Player player, int minute, EventType eventType) {
 		this.team = team;

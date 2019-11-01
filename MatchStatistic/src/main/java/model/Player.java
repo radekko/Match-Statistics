@@ -1,18 +1,18 @@
-package match.MatchStatistic;
+package model;
 public class Player{
 	private int id;
-	private int goals;
-	private int yellowCards;
-	private int redCards;
-	private int matchesPlayed;
+//	private int goals;
+//	private int yellowCards;
+//	private int redCards;
+//	private int matchesPlayed;
 	
 	public Player(int id) {
 		this.id = id;
 	}
-	int getId() {
+	public int getId() {
 		return id;
 	};
-	int getGoalsScored() {
+	/*int getGoalsScored() {
 		return goals;
 	};
 	int getYellowCards() {
@@ -23,7 +23,7 @@ public class Player{
 	}
 	void incrementGoals(int num) {goals += num;}
 	void incrementYellowCards() {yellowCards++;}
-	void incrementRedCards() {redCards++;}
+	void incrementRedCards() {redCards++;}*/
 	
 	@Override
 	public String toString() {

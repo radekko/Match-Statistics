@@ -1,23 +1,15 @@
-package before.season.starting;
+package model;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
-import match.MatchStatistic.Player;
 
 
 public class Team{
-	final long id;
-	//not needed here
-	List<Player> players;
-//	int won;
-//	int draw;
-//	int loose;
+	private final long id;
+	private List<Player> players;
 
-//	public Team(long id) {
-//		this.id = id;
-//	}
+	public Team(long id) {
+		this.id = id;
+	}
 	
 	public Team(long id, List<Player> players) {
 		this.id = id;
@@ -36,10 +28,10 @@ public class Team{
 	public long getId() {
 		return id;
 	}
-
-//	void incrementWon() {won++;}
-//	void incrementDraw() {draw++;}
-//	void incrementLoose() {loose++;}
+	
+	public void printPlayers() {
+		players.stream().forEach(System.out::println);
+	}
 
 	@Override
 	public String toString() {

@@ -1,10 +1,8 @@
-package match.MatchStatistic;
+package model;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import before.season.starting.Team;
 
 public class EventsInMatch {
 	List<Event> events = new ArrayList<>();
@@ -25,6 +23,16 @@ public class EventsInMatch {
 						e -> new Score(e.getPlayer(),e.getMinute())
 				)
 				.collect(Collectors.toList());
+	}
+	
+	public List<Score> getEventScoreForPlayer(Player player){
+		return events.stream().filter(
+				e -> (e.getEventType() == EventType.GOAL && e.getPlayer() == player)
+			)
+			.map(
+					e -> new Score(e.getPlayer(),e.getMinute())
+			)
+			.collect(Collectors.toList());
 	}
 	
 	//here get all scorers

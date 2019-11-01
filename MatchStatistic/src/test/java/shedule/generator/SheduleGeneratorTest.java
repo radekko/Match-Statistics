@@ -6,9 +6,10 @@ import java.util.Map;
 
 import org.junit.Test;
 
-import before.season.starting.Pair;
-import before.season.starting.Team;
+import beforeStarting.Pair;
+import beforeStarting.ScheduleDrawingMachine;
 import junit.framework.TestCase;
+import model.Team;
 
 public class SheduleGeneratorTest extends TestCase {
 

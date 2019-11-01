@@ -1,4 +1,4 @@
-package before.season.starting;
+package beforeStarting;
 
 import java.util.Objects;
 

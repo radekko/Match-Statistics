@@ -1,13 +1,13 @@
-package before.season.starting;
+package beforeStarting;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import match.MatchStatistic.TeamRepo;
+import model.Team;
 
 public class TeamsToDrawing{
-	TeamRepo repo = new TeamRepo();
-	List<Team> teams;
+	private TeamRepo repo = new TeamRepo();
+	private List<Team> teams;
 
 	public TeamsToDrawing() {
 		this.teams = repo.getAllTeams();
