@@ -19,9 +19,14 @@ public class StatisticsPrinter {
 	
 	public void printTeamStatistics(Team team) {
 		System.out.println(
-		"Home goals: " + teamStatistics.getTotalGoalsWhenPlayInHome(team) +
-		"Away goals: " + teamStatistics.getTotalGoalsWhenPlayInAway(team) +
-		"All goals: " + teamStatistics.getTotalTeamGoals(team)
+		"Statistics for team: " + team + "\n" +
+		"Home goals: " + teamStatistics.getTotalGoalsWhenPlayInHome(team) + "\n" +
+		"Away goals: " + teamStatistics.getTotalGoalsWhenPlayInAway(team) + "\n" +
+		"All goals: " + teamStatistics.getTotalTeamGoals(team) + "\n" +
+		"Yellow cards in home: " + teamStatistics.getTotalYellowCardsInHome(team) + "\n" +
+		"Yellow cards away: " + teamStatistics.getTotalYellowCardsAway(team) + "\n" +
+		"Yellow cards total: " + teamStatistics.getTotalYellowCards(team) + "\n"
+		
 				);
 	}
 	public void printPlayerStatistics(Player player) {

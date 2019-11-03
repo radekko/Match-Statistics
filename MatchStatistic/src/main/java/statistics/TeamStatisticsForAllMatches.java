@@ -24,5 +24,17 @@ public class TeamStatisticsForAllMatches {
 		return getTotalGoalsWhenPlayInHome(team) + getTotalGoalsWhenPlayInAway(team);
 	}
 	
+	public int getTotalYellowCardsInHome(Team team) {
+		return matches.stream().filter(p -> p.getHomeTeam() == team).map(MatchPlayedInfo::getHomeYellowCards).reduce(0, Integer::sum);
+	}
+	
+	public int getTotalYellowCardsAway(Team team) {
+		return matches.stream().filter(p -> p.getAwayTeam() == team).map(MatchPlayedInfo::getAwayYellowCards).reduce(0, Integer::sum);
+	}
+
+	public int getTotalYellowCards(Team team) {
+		return getTotalYellowCardsInHome(team) + getTotalYellowCardsAway(team);
+	}
+	
 	
 }

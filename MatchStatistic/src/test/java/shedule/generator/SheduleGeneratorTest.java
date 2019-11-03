@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import beforeStarting.Pair;
 import beforeStarting.ScheduleDrawingMachine;
+import junit.framework.Assert;
 import junit.framework.TestCase;
 import model.Team;
 
@@ -15,7 +16,7 @@ public class SheduleGeneratorTest extends TestCase {
 
 	private List<Team> teams;
 
-	protected void setUp() throws Exception {
+	public void setUp() throws Exception {
 		teams = new ArrayList<Team>();
 		
 		for (int i = 0; i < 4; i++) {
@@ -42,7 +43,7 @@ public class SheduleGeneratorTest extends TestCase {
 	@Test
 	public void testName() throws Exception {
 		Map<Integer, List<Pair>> prepareShedule = ScheduleDrawingMachine.drawSchedule(teams);
-		System.out.println(prepareShedule.size());
+		Assert.assertEquals(prepareShedule.size(),6);
 		
 	}
 

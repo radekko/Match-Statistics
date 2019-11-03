@@ -39,6 +39,14 @@ public class MatchPlayedInfo {
 		return eventsInMatch.getGoals(match.getAwayTeam());
 	}
 	
+	public int getHomeYellowCards() {
+		return eventsInMatch.getYellowCards(match.getHomeTeam());
+	}
+	
+	public int getAwayYellowCards() {
+		return eventsInMatch.getYellowCards(match.getAwayTeam());
+	}
+	
 	public List<Event> getHomeGoalScorer(){
 		return eventsInMatch.getGoalScorer(match.getHomeTeam());
 	}
@@ -47,12 +55,12 @@ public class MatchPlayedInfo {
 		return eventsInMatch.getGoalScorer(match.getAwayTeam());
 	}
 	
-	public List<Event> getHomeYellowCards(){
-		return eventsInMatch.getYellowCards(match.getHomeTeam());
+	public List<Event> getHomeYellowCardsWithDetails(){
+		return eventsInMatch.getYellowCardsWithDetails(match.getHomeTeam());
 	}
 	
-	public List<Event> getAwayYellowCards(){
-		return eventsInMatch.getYellowCards(match.getAwayTeam());
+	public List<Event> getAwayYellowCardsWithDetails(){
+		return eventsInMatch.getYellowCardsWithDetails(match.getAwayTeam());
 	}
 	
 	public List<Event> getHomeRedCards(){
@@ -72,10 +80,10 @@ public class MatchPlayedInfo {
 		String match = getHomeTeam() + " vs " + getAwayTeam() + "  ";
 		String result = getHomeGoals() + ":" + getAwayGoals()+ "\n";
 		String homeGoalScorer = (getHomeGoalScorer().isEmpty() ? "" : "HomeGoalScorer: " + "\n" + getHomeGoalScorer()+ "\n");
-		String homeYellowCards = (getHomeYellowCards().isEmpty() ? "" : "HomeYellowCards: " + "\n" + getHomeYellowCards()+ "\n");
+		String homeYellowCards = (getHomeYellowCardsWithDetails().isEmpty() ? "" : "HomeYellowCards: " + "\n" + getHomeYellowCardsWithDetails()+ "\n");
 		String homeRedCards = (getHomeRedCards().isEmpty() ? "" : "HomeRedCards: " + "\n" + getHomeRedCards()+ "\n");
 		String awayGoalScorer = (getAwayGoalScorer().isEmpty() ? "" : "AwayGoalScorer: " + "\n" + getAwayGoalScorer()+ "\n");
-		String awayYellowCards = (getAwayYellowCards().isEmpty() ? "" : "HomeYellowCards: " + "\n" + getAwayYellowCards()+ "\n");
+		String awayYellowCards = (getHomeYellowCardsWithDetails().isEmpty() ? "" : "HomeYellowCards: " + "\n" + getHomeYellowCardsWithDetails()+ "\n");
 		String awayRedCards = (getAwayRedCards().isEmpty() ? "" : "AwayRedCards: " + "\n" + getAwayRedCards()+ "\n");
 				 
 		return match + 

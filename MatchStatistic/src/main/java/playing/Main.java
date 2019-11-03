@@ -42,7 +42,6 @@ public class Main
     	
     	statisticsGenerator.printTeamStatistics(teams.getTeamById(1));
     	statisticsGenerator.printPlayerStatistics(teams.getTeamById(1).getPlayers().get(0));
-    	
     }
 
 	private static MatchPlayedInfo playMatch(FutureMatch futureMatch) {
@@ -51,37 +50,28 @@ public class Main
 	
 	private static EventsInMatch createRandomEvents(FutureMatch futureMatch){
 		EventsInMatch events = new EventsInMatch();
-		EventsInMatch tempEvents = new EventsInMatch();
-		//random beetwen 1=5, this will be amount of events
-		int amount = draw(1, 5);
+		int numberOfEvents = draw(1, 5);
 		
-		for(int i = 0; i < 5; i++) {
-			Event event = createRandomEvent(futureMatch);
-			tempEvents.addEvent(event);
-		}
+		for(int i = 0; i < numberOfEvents; i++) 
+			events.addEvent(createRandomEvent(futureMatch));
 		
-		events.addEvents(tempEvents);
 		return events;
-		
 	}
 
-
 	private static Event createRandomEvent(FutureMatch futureMatch) {
-		//first random beetwen 1-2 and choose team
 		int whichTeam = draw(1, 2);
 		Team team = (whichTeam == 1 ? futureMatch.getHomeTeam() : futureMatch.getAwayTeam());
-		//random beetwen 1-11 and this will be player from previous team
+
 		int whichPlayer = draw(0 , 10);
 		Player player = team.getPlayers().get(whichPlayer);
 		
-		//random beetwen 1-3, will be event type
 		int eventsAmount = EventType.class.getEnumConstants().length;
 		int whichEvent = ThreadLocalRandom.current().nextInt(0, eventsAmount);
 		EventType eventType = EventType.class.getEnumConstants()[whichEvent];
 		
 		int minute = draw(1,90);
-		Event event = new Event(team, player, minute, eventType);
-		return event;
+		
+		return new Event(team, player, minute, eventType);
 	}
 	
 	private static int draw(int from, int to) {

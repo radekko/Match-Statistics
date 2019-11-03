@@ -12,9 +12,8 @@ public class EventsInMatch {
 	public void addEvent(Event e) {
 		Player p = e.getPlayer();
 		
-		if(getYellowCards(p).size() < 2 && getRedCards(p).size() == 0) {
+		if(getYellowCards(p).size() < 2 && getRedCards(p).size() == 0)
 			events.add(e);
-		}
 		else {
 			OptionalInt redCardMinute = getMinuteOfGettingRedCard(p);
 			OptionalInt secondYellowCardMinute = getMinuteOfGettingSecondYellowCards(p);
@@ -28,8 +27,16 @@ public class EventsInMatch {
 		events.addAll(tempEvents.events);
 	}
 	
+	public int getAmountOfEvents() {
+		return events.size();
+	}
+	
 	public int getGoals(Team team) {
 		return (int)events.stream().filter(e -> (e.getEventType() == EventType.GOAL && e.getTeam() == team)).count();
+	}
+	
+	public int getYellowCards(Team team) {
+		return (int)events.stream().filter(e -> (e.getEventType() == EventType.YELLOW_CARD && e.getTeam() == team)).count();
 	}
 	
 	public List<Event> getGoalScorer(Team team){
@@ -44,7 +51,7 @@ public class EventsInMatch {
 			   .collect(Collectors.toList());
 	}
 
-	public List<Event> getYellowCards(Team team) {
+	public List<Event> getYellowCardsWithDetails(Team team) {
 		return events.stream()
 			   .filter(e -> (e.getEventType() == EventType.YELLOW_CARD && e.getTeam() == team))
 			   .collect(Collectors.toList());
