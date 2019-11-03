@@ -14,10 +14,6 @@ public class MatchPlayedInfo {
 		this.crowd = crowd;
 		this.eventsInMatch = eventsInMatch;
 	}
-
-	public FutureMatch getMatch() {
-		return match;
-	}
 	
 	public int getLigueLine() {
 		return match.getLigueLine();
@@ -27,10 +23,6 @@ public class MatchPlayedInfo {
 		return crowd;
 	}
 
-	public EventsInMatch getEventsInMatch() {
-		return eventsInMatch;
-	}
-	
 	public Team getHomeTeam() {
 		return match.getHomeTeam();
 	}
@@ -47,12 +39,28 @@ public class MatchPlayedInfo {
 		return eventsInMatch.getGoals(match.getAwayTeam());
 	}
 	
-	public List<Score> getHomeGoalScorer(){
+	public List<Event> getHomeGoalScorer(){
 		return eventsInMatch.getGoalScorer(match.getHomeTeam());
 	}
 	
-	public List<Score> getAwayGoalScorer(){
+	public List<Event> getAwayGoalScorer(){
 		return eventsInMatch.getGoalScorer(match.getAwayTeam());
+	}
+	
+	public List<Event> getHomeYellowCards(){
+		return eventsInMatch.getYellowCards(match.getHomeTeam());
+	}
+	
+	public List<Event> getAwayYellowCards(){
+		return eventsInMatch.getYellowCards(match.getAwayTeam());
+	}
+	
+	public List<Event> getHomeRedCards(){
+		return eventsInMatch.getRedCards(match.getHomeTeam());
+	}
+	
+	public List<Event> getAwayRedCards(){
+		return eventsInMatch.getRedCards(match.getAwayTeam());
 	}
 	
 	public int getTotalGoalsForPlayerInMatch(Player player) {
@@ -61,18 +69,23 @@ public class MatchPlayedInfo {
 
 	@Override
 	public String toString() {
-		String line = "Ligue line: " + getLigueLine() + "\n";
-		String match = getHomeTeam() + " vs " + getAwayTeam() + "   ";
+		String match = getHomeTeam() + " vs " + getAwayTeam() + "  ";
 		String result = getHomeGoals() + ":" + getAwayGoals()+ "\n";
-		String homeGoalScorer = (getHomeGoalScorer().isEmpty() ? "" : "HomeGoalScorer: " + "\n" + getHomeGoalScorer()+ "\n");	
-		String awayGoalScorer = (getAwayGoalScorer().isEmpty() ? "" : "AwayGoalScorer: " + "\n" + getAwayGoalScorer()+ "\n");	
+		String homeGoalScorer = (getHomeGoalScorer().isEmpty() ? "" : "HomeGoalScorer: " + "\n" + getHomeGoalScorer()+ "\n");
+		String homeYellowCards = (getHomeYellowCards().isEmpty() ? "" : "HomeYellowCards: " + "\n" + getHomeYellowCards()+ "\n");
+		String homeRedCards = (getHomeRedCards().isEmpty() ? "" : "HomeRedCards: " + "\n" + getHomeRedCards()+ "\n");
+		String awayGoalScorer = (getAwayGoalScorer().isEmpty() ? "" : "AwayGoalScorer: " + "\n" + getAwayGoalScorer()+ "\n");
+		String awayYellowCards = (getAwayYellowCards().isEmpty() ? "" : "HomeYellowCards: " + "\n" + getAwayYellowCards()+ "\n");
+		String awayRedCards = (getAwayRedCards().isEmpty() ? "" : "AwayRedCards: " + "\n" + getAwayRedCards()+ "\n");
 				 
-		return line +
-			   match + 
+		return match + 
 			   result  +
 			   homeGoalScorer +
-			   awayGoalScorer;
-				
+			   homeYellowCards +
+			   homeRedCards +
+			   awayGoalScorer +
+			   awayYellowCards +
+			   awayRedCards;
 	}
 	
 }

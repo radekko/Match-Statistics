@@ -45,4 +45,9 @@ public class Event {
 		this.eventType = eventType;
 	}
 	
+	@Override
+	public String toString() {
+		return player + " - minute: " + minute;
+	}
+	
 }

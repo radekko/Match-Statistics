@@ -3,6 +3,8 @@ package playing;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import model.MatchPlayedInfo;
 
@@ -27,6 +29,18 @@ public class HistoryMatchesRepo {
 	
 	public void printHistory() {
 		matches.stream().forEach(this::printSingle);
+	}
+	
+	public void printHistoryGroupingByLigueLine() {
+		Map<Integer, List<MatchPlayedInfo>> byLigueLine = matches.stream().collect(Collectors.groupingBy(MatchPlayedInfo::getLigueLine));
+		
+		for (Integer line : byLigueLine.keySet()) {
+			System.out.println("Line: " + line);
+			System.out.println("-------------------------------------------------");
+			byLigueLine.get(line).stream().forEach(this::printSingle);
+			System.out.println("-------------------------------------------------");
+		}
+
 	}
 
 	private void printSingle(MatchPlayedInfo info) {

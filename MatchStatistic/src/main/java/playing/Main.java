@@ -36,27 +36,37 @@ public class Main
     	}
     	
     	System.out.println(schedule.getTotalLines());
-    	historyMatches.printHistory();
+    	historyMatches.printHistoryGroupingByLigueLine();
     	
     	StatisticsPrinter statisticsGenerator = new StatisticsPrinter(historyMatches.getAllHistory());
     	
     	statisticsGenerator.printTeamStatistics(teams.getTeamById(1));
     	statisticsGenerator.printPlayerStatistics(teams.getTeamById(1).getPlayers().get(0));
     	
-    	
     }
 
 	private static MatchPlayedInfo playMatch(FutureMatch futureMatch) {
-		return new MatchPlayedInfo(futureMatch, 1200, prepareRandomEvents(futureMatch));
+		return new MatchPlayedInfo(futureMatch, 1200, createRandomEvents(futureMatch));
 	}
 	
-	private static EventsInMatch prepareRandomEvents(FutureMatch futureMatch){
+	private static EventsInMatch createRandomEvents(FutureMatch futureMatch){
 		EventsInMatch events = new EventsInMatch();
+		EventsInMatch tempEvents = new EventsInMatch();
 		//random beetwen 1=5, this will be amount of events
 		int amount = draw(1, 5);
 		
 		for(int i = 0; i < 5; i++) {
+			Event event = createRandomEvent(futureMatch);
+			tempEvents.addEvent(event);
+		}
 		
+		events.addEvents(tempEvents);
+		return events;
+		
+	}
+
+
+	private static Event createRandomEvent(FutureMatch futureMatch) {
 		//first random beetwen 1-2 and choose team
 		int whichTeam = draw(1, 2);
 		Team team = (whichTeam == 1 ? futureMatch.getHomeTeam() : futureMatch.getAwayTeam());
@@ -71,11 +81,7 @@ public class Main
 		
 		int minute = draw(1,90);
 		Event event = new Event(team, player, minute, eventType);
-		events.addEvent(event);
-		}
-		
-		return events;
-		
+		return event;
 	}
 	
 	private static int draw(int from, int to) {
