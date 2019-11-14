@@ -1,99 +1,183 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import beforeStarting.FutureMatch;
+import model.Event.EventSnapshot;
 
 public class MatchPlayedInfo {
-	private FutureMatch match;
+	private Team homeTeam;
+	private Team awayTeam;
+	private int ligueLine;
 	private int crowd;
-	private EventsInMatch eventsInMatch;
+	private List<Event> events = new ArrayList<>();
+	
+	private List<EventSnapshot> homeGoals = new ArrayList<>();
+	private List<EventSnapshot> awayGoals = new ArrayList<>();
+	private List<EventSnapshot> homeYellowCards = new ArrayList<>();
+	private List<EventSnapshot> awayYellowCards = new ArrayList<>();
+	private List<EventSnapshot> homeRedCards = new ArrayList<>();
+	private List<EventSnapshot> awayRedCards = new ArrayList<>();
 	
 	public MatchPlayedInfo(FutureMatch match, int crowd, EventsInMatch eventsInMatch) {
-		this.match = match;
+		this.homeTeam = match.getHomeTeam();
+		this.awayTeam = match.getAwayTeam();
+		this.ligueLine = match.getLigueLine();
 		this.crowd = crowd;
-		this.eventsInMatch = eventsInMatch;
+		this.events = eventsInMatch.getEvents();
+		
+		this.homeGoals = prepareGoalsList(homeTeam);
+		this.awayGoals = prepareGoalsList(awayTeam);
+		
+		this.homeYellowCards = prepareYellowCardsList(homeTeam);
+		this.awayYellowCards = prepareYellowCardsList(awayTeam);
+		
+		this.homeRedCards = prepareRedCardsList(homeTeam);
+		this.awayRedCards = prepareRedCardsList(awayTeam);
+	}
+	
+	public boolean isHost(Team team){
+		return  team == homeTeam ? true : false; 
+	}
+	
+	public boolean isAway(Team team){
+		return  team == awayTeam ? true : false; 
 	}
 	
 	public int getLigueLine() {
-		return match.getLigueLine();
+		return ligueLine;
 	}
 
 	public int getCrowd() {
 		return crowd;
 	}
+	
+	public List<EventSnapshot> getHostGoals() {
+		return homeGoals;
+	}
 
-	public Team getHomeTeam() {
-		return match.getHomeTeam();
+	public List<EventSnapshot> getAwayGoals() {
+		return awayGoals;
+	}
+
+	public List<EventSnapshot> getHostYellowCards() {
+		return homeYellowCards;
+	}
+
+	public List<EventSnapshot> getAwayYellowCards() {
+		return awayYellowCards;
+	}
+
+	public List<EventSnapshot> getHostRedCards() {
+		return homeRedCards;
+	}
+
+	public List<EventSnapshot> getAwayRedCards() {
+		return awayRedCards;
+	}
+
+	private List<EventSnapshot> prepareGoalsList(Team team){
+		return findEventsForTeam(Event.isGoal(), team);
+	}
+	
+	private List<EventSnapshot> prepareYellowCardsList(Team team){
+		return findEventsForTeam(Event.isYellowCard(), team);
+	}
+	
+	private List<EventSnapshot> prepareRedCardsList(Team team){
+		return findEventsForTeam(Event.isRedCard(), team);
+	}
+	
+	private List<EventSnapshot> findEventsForTeam(Predicate<Event> predEventType, Team team){
+		return events.stream()
+				   .filter(predEventType.and(Event.isForTeam(team)))
+				   .map(Event::prepareSnapshot)
+				   .collect(Collectors.toList());
+	}
+	
+	/*public Team getHomeTeam() {
+		return homeTeam;
 	}
 	
 	public Team getAwayTeam() {
-		return match.getAwayTeam();
-	}
+		return awayTeam;
+	}*/
 	
-	public int getHomeGoals() {
-		return eventsInMatch.getGoals(match.getHomeTeam());
+	/*public int getHomeGoals() {
+		return getGoalsForTeam(match.getHomeTeam());
 	}
 	
 	public int getAwayGoals() {
-		return eventsInMatch.getGoals(match.getAwayTeam());
+		return getGoalsForTeam(match.getAwayTeam());
 	}
 	
-	public int getHomeYellowCards() {
-		return eventsInMatch.getYellowCards(match.getHomeTeam());
-	}
-	
-	public int getAwayYellowCards() {
-		return eventsInMatch.getYellowCards(match.getAwayTeam());
+	private int getGoalsForTeam(Team team) {
+		return getGoalScorersForTeam(team).size();
 	}
 	
 	public List<Event> getHomeGoalScorer(){
-		return eventsInMatch.getGoalScorer(match.getHomeTeam());
+		return getGoalScorersForTeam(match.getHomeTeam());
 	}
 	
 	public List<Event> getAwayGoalScorer(){
-		return eventsInMatch.getGoalScorer(match.getAwayTeam());
+		return getGoalScorersForTeam(match.getAwayTeam());
+	}
+	
+	public List<Event> getGoalScorersForTeam(Team team){
+		return events.stream()
+			   .filter(Event.isGoal().and(Event.isForTeam(team)))
+			   .collect(Collectors.toList());
 	}
 	
 	public List<Event> getHomeYellowCardsWithDetails(){
-		return eventsInMatch.getYellowCardsWithDetails(match.getHomeTeam());
+		return getYellowCardsWithDetails(match.getHomeTeam());
 	}
 	
 	public List<Event> getAwayYellowCardsWithDetails(){
-		return eventsInMatch.getYellowCardsWithDetails(match.getAwayTeam());
+		return getYellowCardsWithDetails(match.getAwayTeam());
+	}
+	
+	private List<Event> getYellowCardsWithDetails(Team team) {
+		return events.stream()
+			   .filter(Event.isYellowCard().and(Event.isForTeam(team)))
+			   .collect(Collectors.toList());
 	}
 	
 	public List<Event> getHomeRedCards(){
-		return eventsInMatch.getRedCards(match.getHomeTeam());
+		return getRedCards(match.getHomeTeam());
 	}
 	
 	public List<Event> getAwayRedCards(){
-		return eventsInMatch.getRedCards(match.getAwayTeam());
+		return getRedCards(match.getAwayTeam());
 	}
 	
-	public int getTotalGoalsForPlayerInMatch(Player player) {
-		return eventsInMatch.getEventScoreForPlayer(player).size();
-	}
+	private List<Event> getRedCards(Team team) {
+		return events.stream()
+			   .filter(Event.isRedCard().and(Event.isForTeam(team)))
+			   .collect(Collectors.toList());
+	}*/
 
-	@Override
+	@Override //maybe print only events
 	public String toString() {
-		String match = getHomeTeam() + " vs " + getAwayTeam() + "  ";
-		String result = getHomeGoals() + ":" + getAwayGoals()+ "\n";
-		String homeGoalScorer = (getHomeGoalScorer().isEmpty() ? "" : "HomeGoalScorer: " + "\n" + getHomeGoalScorer()+ "\n");
-		String homeYellowCards = (getHomeYellowCardsWithDetails().isEmpty() ? "" : "HomeYellowCards: " + "\n" + getHomeYellowCardsWithDetails()+ "\n");
-		String homeRedCards = (getHomeRedCards().isEmpty() ? "" : "HomeRedCards: " + "\n" + getHomeRedCards()+ "\n");
-		String awayGoalScorer = (getAwayGoalScorer().isEmpty() ? "" : "AwayGoalScorer: " + "\n" + getAwayGoalScorer()+ "\n");
-		String awayYellowCards = (getHomeYellowCardsWithDetails().isEmpty() ? "" : "HomeYellowCards: " + "\n" + getHomeYellowCardsWithDetails()+ "\n");
-		String awayRedCards = (getAwayRedCards().isEmpty() ? "" : "AwayRedCards: " + "\n" + getAwayRedCards()+ "\n");
+		String match = homeTeam + " vs " + awayTeam + "  ";
+		String result = homeGoals.size() + ":" + awayGoals.size() + "\n";
+		String homeGoalScorer2 = (homeGoals.isEmpty() ? "" : "HomeGoalScorer: " + "\n" + homeGoals+ "\n");
+		String homeYellowCards2 = (homeYellowCards.isEmpty() ? "" : "HomeYellowCards: " + "\n" + homeYellowCards+ "\n");
+		String homeRedCards2 = (homeRedCards.isEmpty() ? "" : "HomeRedCards: " + "\n" + homeRedCards+ "\n");
+		String awayGoalScorer2 = (awayGoals.isEmpty() ? "" : "AwayGoalScorer: " + "\n" + awayGoals+ "\n");
+		String awayYellowCards2 = (awayYellowCards.isEmpty() ? "" : "AwayYellowCards: " + "\n" + awayYellowCards+ "\n");
+		String awayRedCards2 = (awayRedCards.isEmpty() ? "" : "AwayRedCards: " + "\n" + awayRedCards+ "\n");
 				 
 		return match + 
 			   result  +
-			   homeGoalScorer +
-			   homeYellowCards +
-			   homeRedCards +
-			   awayGoalScorer +
-			   awayYellowCards +
-			   awayRedCards;
+			   homeGoalScorer2 +
+			   awayGoalScorer2 +
+			   homeYellowCards2 +
+			   awayYellowCards2 +
+			   homeRedCards2 +
+			   awayRedCards2;
 	}
-	
 }

@@ -1,81 +1,58 @@
 package playing;
 
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
-import beforeStarting.FutureLigueLines;
+import beforeStarting.Schedule;
 import beforeStarting.FutureMatch;
-import beforeStarting.MatchesInCurrentLine;
+import beforeStarting.LigueLine;
 import beforeStarting.TeamsToDrawing;
-import model.Event;
-import model.EventType;
-import model.EventsInMatch;
 import model.MatchPlayedInfo;
-import model.Player;
 import model.Team;
-import statistics.StatisticsPrinter;
+import statistics.GoalStatisticsPrinter;
 
 public class Main 
 {
-	public static void main( String[] args )
+	public static void main(String[] args)
     {
     	TeamsToDrawing teams = new TeamsToDrawing();
-    	FutureLigueLines schedule = new FutureLigueLines(teams);
+    	Schedule schedule = new Schedule(teams);
     	
-    	HistoryMatchesRepo historyMatches = new HistoryMatchesRepo();
+    	HistoryMatchesRepo historyMatchesRepo = new HistoryMatchesRepo();
     	
-    	for(int i = 0; i < schedule.getTotalLines(); i++) {
-    		MatchesInCurrentLine matchesInChosenLigueLine = schedule.getLigueLine(++i);
-    		List<FutureMatch> matchesToPlay = matchesInChosenLigueLine.getMatchesInCurrLine();
-    		
-    		List<MatchPlayedInfo> playedMatches = matchesToPlay.stream().map(Main::playMatch).collect(Collectors.toList());
-    		historyMatches.storeAllMatchesInHistory(playedMatches);
-    		
-    		i--;
+    	for(int ligueLine = 1; ligueLine < schedule.getTotalLines() + 1; ligueLine++) {
+    		List<MatchPlayedInfo> playedMatches = playMatches(schedule.getChosenLigueLine(ligueLine));
+    		historyMatchesRepo.storeAllMatchesInHistory(playedMatches);
     	}
     	
-    	System.out.println(schedule.getTotalLines());
-    	historyMatches.printHistoryGroupingByLigueLine();
+    	System.out.println("Played lines: " + schedule.getTotalLines() + "\n");
+    	historyMatchesRepo.printHistoryGroupingByLigueLine();
     	
-    	StatisticsPrinter statisticsGenerator = new StatisticsPrinter(historyMatches.getAllHistory());
+    	GoalStatisticsPrinter statisticsGenerator = new GoalStatisticsPrinter(historyMatchesRepo.getAllHistory());
+//    	statisticsGenerator.printAllTeamsStatistics(teams.getAll());
     	
-    	statisticsGenerator.printTeamStatistics(teams.getTeamById(1));
-    	statisticsGenerator.printPlayerStatistics(teams.getTeamById(1).getPlayers().get(0));
+    	Team inspectedTeam = teams.getTeamById(2);
+    	System.out.println("General team statistics: ");
+    	statisticsGenerator.printTeamStatistics(inspectedTeam);
+    	System.out.println("Player statistics for chosen team: ");
+    	
+		System.out.println("Goals: ");
+    	IntStream.range(0, 11).forEach(i -> statisticsGenerator.printGoalsForPlayer(inspectedTeam, inspectedTeam.getPlayers().get(i)));
+    	
+    	//first get all teams 
+    	//then get all players from team
+    	
     }
+	
+	private static List<MatchPlayedInfo> playMatches(LigueLine ligueLine) {
+		List<FutureMatch> matchesToPlay = ligueLine.getMatchesInCurrLine();
+		List<MatchPlayedInfo> playedMatches = matchesToPlay.stream().map(Main::playMatch).collect(Collectors.toList());
+		return playedMatches;
+	}
 
 	private static MatchPlayedInfo playMatch(FutureMatch futureMatch) {
-		return new MatchPlayedInfo(futureMatch, 1200, createRandomEvents(futureMatch));
-	}
-	
-	private static EventsInMatch createRandomEvents(FutureMatch futureMatch){
-		EventsInMatch events = new EventsInMatch();
-		int numberOfEvents = draw(1, 5);
-		
-		for(int i = 0; i < numberOfEvents; i++) 
-			events.addEvent(createRandomEvent(futureMatch));
-		
-		return events;
-	}
-
-	private static Event createRandomEvent(FutureMatch futureMatch) {
-		int whichTeam = draw(1, 2);
-		Team team = (whichTeam == 1 ? futureMatch.getHomeTeam() : futureMatch.getAwayTeam());
-
-		int whichPlayer = draw(0 , 10);
-		Player player = team.getPlayers().get(whichPlayer);
-		
-		int eventsAmount = EventType.class.getEnumConstants().length;
-		int whichEvent = ThreadLocalRandom.current().nextInt(0, eventsAmount);
-		EventType eventType = EventType.class.getEnumConstants()[whichEvent];
-		
-		int minute = draw(1,90);
-		
-		return new Event(team, player, minute, eventType);
-	}
-	
-	private static int draw(int from, int to) {
-		return ThreadLocalRandom.current().nextInt(from, to + 1);
+		return new MatchPlayedInfo(futureMatch, 1200, DrawingEvents.getDrawedEvents(futureMatch));
 	}
 
 }

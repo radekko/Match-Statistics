@@ -3,67 +3,106 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.OptionalInt;
-import java.util.function.IntConsumer;
 import java.util.stream.Collectors;
 
+
+//TODO!!!!!!!!!!!!! probably goalsInMatch, yellowCardsInMatch, RedCardsInmatch
 public class EventsInMatch {
 	private List<Event> events = new ArrayList<>();
 
-	public void addEvent(Event e) {
-		Player p = e.getPlayer();
+	public void addNextEvent(Event e) {
+		//not next
+		if(e.getMinute() < getMinuteOfLastEvent())
+			return;
 		
-		if(getYellowCards(p).size() < 2 && getRedCards(p).size() == 0)
+		Player p = e.getPlayer();
+		Team t = e.getTeam();
+		
+		if(getYellowCards(p) < 2 && getRedCards(p) == 0 && getRedCards(t) < 7)
 			events.add(e);
-		else {
-			OptionalInt redCardMinute = getMinuteOfGettingRedCard(p);
-			OptionalInt secondYellowCardMinute = getMinuteOfGettingSecondYellowCards(p);
-			
-			redCardMinute.ifPresent(addToEventsIfCurrEventIsFormer(e));
-			secondYellowCardMinute.ifPresent(addToEventsIfCurrEventIsFormer(e));
-		}
-	}
-
-	public void addEvents(EventsInMatch tempEvents) {
-		events.addAll(tempEvents.events);
 	}
 	
-	public int getAmountOfEvents() {
+	public List<Event> getEvents() {
+		return new ArrayList<Event>(events);
+	}
+
+	/*public int getAmountOfEvents() {
 		return events.size();
-	}
+	}*/
 	
-	public int getGoals(Team team) {
-		return (int)events.stream().filter(e -> (e.getEventType() == EventType.GOAL && e.getTeam() == team)).count();
-	}
-	
-	public int getYellowCards(Team team) {
-		return (int)events.stream().filter(e -> (e.getEventType() == EventType.YELLOW_CARD && e.getTeam() == team)).count();
-	}
-	
-	public List<Event> getGoalScorer(Team team){
+	//get Events for team
+	/*public List<Event> getEventsForTeam(Team team){
 		return events.stream()
-			   .filter(e -> (e.getEventType() == EventType.GOAL && e.getTeam() == team))
+			   .filter(Event.isForTeam(team))
 			   .collect(Collectors.toList());
-	}
+	}*/
 	
-	public List<Event> getEventScoreForPlayer(Player player){
+	//get events for player
+	/*public List<Event> getEventsForPlayer(Player player){
 		return events.stream()
-			   .filter(e -> (e.getEventType() == EventType.GOAL && e.getPlayer() == player))
+			   .filter(Event.isForPlayer(player))
 			   .collect(Collectors.toList());
-	}
+	}*/
+	
+	
+	//get home goal scorers -> List<PlayerId, minute>
+	/*public List<Event> getGoalScorersForTeam(Team team){
+		return events.stream()
+			   .filter(Event.isGoal().and(Event.isForTeam(team)))
+			   .collect(Collectors.toList());
+	}*/
+	//TODO: return List<Integers> minutes
+	/*public List<Event> getGoalMinutesForPlayer(Player player){
+		return events.stream()
+			   .filter(Event.isGoal().and(Event.isForPlayer(player)))
+			   .collect(Collectors.toList());
+	}*/
 
-	public List<Event> getYellowCardsWithDetails(Team team) {
+	//TODO  return list with minute and player
+	/*public List<Event> getYellowCardsWithDetails(Team team) {
 		return events.stream()
-			   .filter(e -> (e.getEventType() == EventType.YELLOW_CARD && e.getTeam() == team))
+			   .filter(Event.isYellowCard().and(Event.isForTeam(team)))
 			   .collect(Collectors.toList());
+	}*/
+	//TODO return List<Integer> minutes
+//	public List<Event> getYellowCards(Player player) {
+//		return events.stream()
+//			   .filter(Event.isYellowCard().and(Event.isForPlayer(player)))
+//			   .collect(Collectors.toList());
+//	}
+	private int getYellowCards(Player player) {
+		return (int)events.stream()
+			   .filter(Event.isYellowCard().and(Event.isForPlayer(player)))
+			   .count();
 	}
 	
-	public List<Event> getYellowCards(Player player) {
-		return events.stream()
-			   .filter(e -> (e.getEventType() == EventType.YELLOW_CARD && e.getPlayer() == player))
-			   .collect(Collectors.toList());
+	private int getRedCards(Team team) {
+		return (int)events.stream()
+			   .filter(Event.isRedCard().and(Event.isForTeam(team)))
+			   .count();
 	}
 	
-	public OptionalInt getMinuteOfGettingSecondYellowCards(Player player) {
+	private int getRedCards(Player player) {
+		return (int)events.stream()
+			   .filter(Event.isRedCard().and(Event.isForPlayer(player)))
+			   .count();
+	}
+	
+	
+	//TODO return List<Integer> minutes
+	/*public List<Event> getRedCards(Team team) {
+		return events.stream()
+			   .filter(Event.isRedCard().and(Event.isForTeam(team)))
+			   .collect(Collectors.toList());
+	}*/
+	//TODO: return Optional<Integer> minute
+	/*public List<Event> getRedCards(Player player) {
+		return events.stream()
+			   .filter(Event.isRedCard().and(Event.isForPlayer(player)))
+			   .collect(Collectors.toList());
+	}*/
+
+	/*public OptionalInt getMinuteOfGettingSecondYellowCards(Player player) {
 		return events.stream()
 			   .filter(e -> (e.getEventType() == EventType.YELLOW_CARD && e.getPlayer() == player))
 			   .mapToInt(Event::getMinute)
@@ -72,30 +111,16 @@ public class EventsInMatch {
 			   .findAny();
 	}
 	
-	public List<Event> getRedCards(Team team) {
-		return events.stream()
-			   .filter(e -> (e.getEventType() == EventType.RED_CARD && e.getTeam() == team))
-			   .collect(Collectors.toList());
-	}
-
-	public List<Event> getRedCards(Player player) {
-		return events.stream()
-			   .filter(e -> (e.getEventType() == EventType.RED_CARD && e.getPlayer() == player))
-			   .collect(Collectors.toList());
-	}
-	
 	public OptionalInt getMinuteOfGettingRedCard(Player player) {
 		return events.stream()
 			   .filter(e -> (e.getEventType() == EventType.RED_CARD && e.getPlayer() == player))
 			   .mapToInt(Event::getMinute)
 			   .findAny();
-	}
+	}*/
 	
-	private IntConsumer addToEventsIfCurrEventIsFormer(Event e) {
-		return m -> {
-			if(m>e.getMinute())
-				events.add(e);
-		};
+	private int getMinuteOfLastEvent() {
+		return events.stream()
+			   .mapToInt(Event::getMinute)
+			   .max().orElse(0);
 	}
-
 }

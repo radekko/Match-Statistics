@@ -3,10 +3,10 @@ package beforeStarting;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MatchesInCurrentLine {
+public class LigueLine {
 	private List<FutureMatch> matchesInCurrLine;
 	
-	public MatchesInCurrentLine(List<FutureMatch> matchesInCurrLine) {
+	public LigueLine(List<FutureMatch> matchesInCurrLine) {
 		this.matchesInCurrLine = matchesInCurrLine;
 	}
 
@@ -22,7 +22,5 @@ public class MatchesInCurrentLine {
 	public String toString() {
 		return "Matches [matchesInCurrLine=" + matchesInCurrLine + "]";
 	}
-	
-	
 
 }
