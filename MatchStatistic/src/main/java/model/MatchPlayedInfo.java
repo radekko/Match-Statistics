@@ -55,7 +55,7 @@ public class MatchPlayedInfo {
 		return crowd;
 	}
 	
-	public List<EventSnapshot> getHostGoals() {
+	public List<EventSnapshot> getHomeGoals() {
 		return homeGoals;
 	}
 
@@ -98,69 +98,7 @@ public class MatchPlayedInfo {
 				   .collect(Collectors.toList());
 	}
 	
-	/*public Team getHomeTeam() {
-		return homeTeam;
-	}
-	
-	public Team getAwayTeam() {
-		return awayTeam;
-	}*/
-	
-	/*public int getHomeGoals() {
-		return getGoalsForTeam(match.getHomeTeam());
-	}
-	
-	public int getAwayGoals() {
-		return getGoalsForTeam(match.getAwayTeam());
-	}
-	
-	private int getGoalsForTeam(Team team) {
-		return getGoalScorersForTeam(team).size();
-	}
-	
-	public List<Event> getHomeGoalScorer(){
-		return getGoalScorersForTeam(match.getHomeTeam());
-	}
-	
-	public List<Event> getAwayGoalScorer(){
-		return getGoalScorersForTeam(match.getAwayTeam());
-	}
-	
-	public List<Event> getGoalScorersForTeam(Team team){
-		return events.stream()
-			   .filter(Event.isGoal().and(Event.isForTeam(team)))
-			   .collect(Collectors.toList());
-	}
-	
-	public List<Event> getHomeYellowCardsWithDetails(){
-		return getYellowCardsWithDetails(match.getHomeTeam());
-	}
-	
-	public List<Event> getAwayYellowCardsWithDetails(){
-		return getYellowCardsWithDetails(match.getAwayTeam());
-	}
-	
-	private List<Event> getYellowCardsWithDetails(Team team) {
-		return events.stream()
-			   .filter(Event.isYellowCard().and(Event.isForTeam(team)))
-			   .collect(Collectors.toList());
-	}
-	
-	public List<Event> getHomeRedCards(){
-		return getRedCards(match.getHomeTeam());
-	}
-	
-	public List<Event> getAwayRedCards(){
-		return getRedCards(match.getAwayTeam());
-	}
-	
-	private List<Event> getRedCards(Team team) {
-		return events.stream()
-			   .filter(Event.isRedCard().and(Event.isForTeam(team)))
-			   .collect(Collectors.toList());
-	}*/
-
-	@Override //maybe print only events
+	@Override
 	public String toString() {
 		String match = homeTeam + " vs " + awayTeam + "  ";
 		String result = homeGoals.size() + ":" + awayGoals.size() + "\n";

@@ -2,11 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.OptionalInt;
-import java.util.stream.Collectors;
 
-
-//TODO!!!!!!!!!!!!! probably goalsInMatch, yellowCardsInMatch, RedCardsInmatch
 public class EventsInMatch {
 	private List<Event> events = new ArrayList<>();
 

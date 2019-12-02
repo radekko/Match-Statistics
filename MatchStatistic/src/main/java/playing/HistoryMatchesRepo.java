@@ -40,11 +40,9 @@ public class HistoryMatchesRepo {
 			byLigueLine.get(line).stream().forEach(this::printSingle);
 			System.out.println("-------------------------------------------------");
 		}
-
 	}
 
 	private void printSingle(MatchPlayedInfo info) {
 		 System.out.println(info + "\n");
 	}
-	
 }
