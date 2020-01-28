@@ -1,20 +1,13 @@
-package beforeStarting;
+package beforePlaying;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Team;
-
-public class TeamsToDrawing{
-	private TeamRepo repo = new TeamRepo();
+public class Teams{
 	private List<Team> teams;
 
-	public TeamsToDrawing() {
+	public Teams(TeamRepo repo) {
 		this.teams = repo.getAllTeams();
-	}
-	
-	public void addTeam(Team team) {
-		this.teams.add(team);
 	}
 	
 	public Team getTeamById(long id) {

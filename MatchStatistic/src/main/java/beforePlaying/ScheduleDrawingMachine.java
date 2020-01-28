@@ -1,4 +1,4 @@
-package beforeStarting;
+package beforePlaying;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,8 +7,6 @@ import java.util.Random;
 import java.util.TreeMap;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-
-import model.Team;
 
 // Working only for small number of teams, around 10
 // More number of teams need better algorithm

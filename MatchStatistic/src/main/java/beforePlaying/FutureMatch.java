@@ -1,6 +1,4 @@
-package beforeStarting;
-
-import model.Team;
+package beforePlaying;
 
 public class FutureMatch{
 	private Team homeTeam;

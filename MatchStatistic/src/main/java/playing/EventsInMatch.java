@@ -1,7 +1,10 @@
-package model;
+package playing;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import beforePlaying.Player;
+import beforePlaying.Team;
 
 public class EventsInMatch {
 	private List<Event> events = new ArrayList<>();

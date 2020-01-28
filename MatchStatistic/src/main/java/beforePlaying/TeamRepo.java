@@ -1,13 +1,10 @@
-package beforeStarting;
+package beforePlaying;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Player;
-import model.Team;
-
 public class TeamRepo {
-	List<Team> teams = new ArrayList<>();
+	private List<Team> teams = new ArrayList<>();
 	
 	public TeamRepo() {
 		for (int i = 1; i < 5; i++) {

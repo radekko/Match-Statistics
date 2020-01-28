@@ -1,20 +1,38 @@
-package statistics;
+package afterPlaying;
 
 import java.util.List;
-import java.util.function.Function;
 
-import model.Event.EventSnapshot;
-import model.MatchPlayedInfo;
-import model.Team;
+import beforePlaying.Team;
 
 public class TeamStatisticsPrinter {
-	private final TeamStats teamStats;
+	private final SingleTeamStats teamStats;
 
-	public TeamStatisticsPrinter(TeamStats teamStats) {
+	public TeamStatisticsPrinter(SingleTeamStats teamStats) {
 		this.teamStats = teamStats;
 	}
 	
 	public void printAllTeamsStatistics(List<Team> teams) {
+		teams.stream().forEach(this::printAllTeamStatistics);
+	}
+	
+	public void printAllTeamStatistics(Team team) {
+    	System.out.println("General statistics for " + team);
+    	System.out.println("-------------------------------------------------");
+		printGoalsStatistics(team);
+		System.out.println();
+		System.out.println();
+	}
+
+	private void printGoalsStatistics(Team team) {
+		System.out.println("Home goals: ");
+		System.out.println(teamStats.getTotalHomeGoals(team));
+		System.out.println("Away goals: ");
+		System.out.println(teamStats.getTotalAwayGoals(team));
+		System.out.println("Total goals: ");
+		System.out.println(teamStats.getTotalGoals(team));
+	}
+	
+	/*public void printAllTeamsStatistics(List<Team> teams) {
 		teams.stream().forEach(this::printAllTeamStatistics);
 	}
 	
@@ -62,7 +80,7 @@ public class TeamStatisticsPrinter {
 			Function<MatchPlayedInfo, List<EventSnapshot>> whichEvents2) {
 		System.out.println("Total");
 		System.out.println(teamStats.getSumOfEvents(team, whichEvents, whichEvents2).size());
-	}
+	}*/
 	
 	/*public void printGoalsForPlayer(Team team, Player player) {
 		System.out.println("player id: " + player.getId());

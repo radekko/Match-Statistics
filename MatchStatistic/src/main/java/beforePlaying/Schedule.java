@@ -1,17 +1,15 @@
-package beforeStarting;
+package beforePlaying;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import model.Team;
-
 public class Schedule {
-	private final TeamsToDrawing teams;
+	private final Teams teams;
 	private Map<Integer, LigueLine> ligueLines;
 	
-	public Schedule(TeamsToDrawing teams) {
+	public Schedule(Teams teams) {
 		this.teams = teams;
 		this.ligueLines = createLigueLines();
 	}

@@ -1,4 +1,4 @@
-package beforeStarting;
+package beforePlaying;
 
 import java.util.Objects;
 

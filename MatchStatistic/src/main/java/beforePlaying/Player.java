@@ -1,4 +1,4 @@
-package model;
+package beforePlaying;
 public class Player{
 	private int id;
 //	private int goals;

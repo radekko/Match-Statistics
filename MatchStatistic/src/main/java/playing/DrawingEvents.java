@@ -6,12 +6,9 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
-import beforeStarting.FutureMatch;
-import model.Event;
-import model.EventType;
-import model.EventsInMatch;
-import model.Player;
-import model.Team;
+import beforePlaying.FutureMatch;
+import beforePlaying.Player;
+import beforePlaying.Team;
 
 public class DrawingEvents {
 	

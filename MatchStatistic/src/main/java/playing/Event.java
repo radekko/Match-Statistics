@@ -1,6 +1,9 @@
-package model;
+package playing;
 
 import java.util.function.Predicate;
+
+import beforePlaying.Player;
+import beforePlaying.Team;
 
 public class Event {
 	private Team team;
@@ -71,6 +74,11 @@ public class Event {
 	    return e ->  e.getTeam() == team;
 	}
 	
+	@Override
+	public String toString() {
+		return "Event [team=" + team + ", player=" + player + ", minute=" + minute + ", eventType=" + eventType + "]";
+	}
+
 	public class EventSnapshot{
 		private Player player;
 		private int minute;

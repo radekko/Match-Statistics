@@ -6,12 +6,12 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import beforePlaying.Player;
+import beforePlaying.Team;
 import junit.framework.Assert;
-import model.Event;
-import model.EventType;
-import model.EventsInMatch;
-import model.Player;
-import model.Team;
+import playing.Event;
+import playing.EventType;
+import playing.EventsInMatch;
 
 public class EventInMatchTest {
 	

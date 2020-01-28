@@ -1,4 +1,4 @@
-package model;
+package beforePlaying;
 
 import java.util.List;
 

@@ -1,7 +1,10 @@
-package model;
+package afterPlaying;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import beforePlaying.Team;
+import playing.Event;
 
 public class StatisticsForTeamInMatch {
 	private List<Event> eventsForTeam;

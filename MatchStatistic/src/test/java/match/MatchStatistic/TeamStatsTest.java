@@ -10,25 +10,25 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import beforeStarting.FutureMatch;
-import model.Event;
-import model.Event.EventSnapshot;
-import model.EventType;
-import model.EventsInMatch;
-import model.MatchPlayedInfo;
-import model.Player;
-import model.Team;
-import statistics.PlaceOfPlaying;
-import statistics.PlayerStats;
-import statistics.TeamStats;
+import afterPlaying.PlaceOfPlaying;
+import afterPlaying.SinglePlayerStats;
+import afterPlaying.SingleTeamStats;
+import beforePlaying.FutureMatch;
+import beforePlaying.Player;
+import beforePlaying.Team;
+import playing.Event;
+import playing.EventType;
+import playing.EventsInMatch;
+import playing.MatchPlayedInfo;
+import playing.Event.EventSnapshot;
 
 public class TeamStatsTest {
 
 	private List<MatchPlayedInfo> matches;
-	private TeamStats teamStats;
+	private SingleTeamStats teamStats;
 	private Team team;
 	private Team team2;
-	private PlayerStats playerStats;
+	private SinglePlayerStats playerStats;
 
 	@Before
 	public void setUp() {
@@ -52,22 +52,22 @@ public class TeamStatsTest {
 		matches.add(m);
 		matches.add(m2);
 		
-		teamStats = new TeamStats(matches);
-		playerStats = new PlayerStats(teamStats);
+		teamStats = new SingleTeamStats(matches);
+		playerStats = new SinglePlayerStats(teamStats);
 		
-		System.out.println("home");
+	/*	System.out.println("home");
 		System.out.println(playerStats.getHomeOrAwayEvents(team, p, PlaceOfPlaying.HOME, MatchPlayedInfo::getHomeGoals));
 		System.out.println("away");
 		System.out.println(playerStats.getHomeOrAwayEvents(team, p, PlaceOfPlaying.AWAY, MatchPlayedInfo::getAwayGoals));
 		System.out.println("total");
-		System.out.println(playerStats.getSumOfEvents(team, p, MatchPlayedInfo::getHomeGoals, MatchPlayedInfo::getAwayGoals));
+		System.out.println(playerStats.getSumOfEvents(team, p, MatchPlayedInfo::getHomeGoals, MatchPlayedInfo::getAwayGoals));*/
 	}
 	
-	@Test
+	/*@Test
 	public void testName() throws Exception {
 		List<EventSnapshot> homeOrAwayEvents = teamStats.getHomeOrAwayEvents(team, PlaceOfPlaying.HOME, MatchPlayedInfo::getHomeGoals);
 		assertEquals(homeOrAwayEvents.size(), 2);
-	}
+	}*/
 	
 //	@Test
 //	public void testName2() throws Exception {

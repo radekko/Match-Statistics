@@ -1,9 +1,9 @@
-package statistics;
+package afterPlaying;
 
 import java.util.function.Predicate;
 
-import model.MatchPlayedInfo;
-import model.Team;
+import beforePlaying.Team;
+import playing.MatchPlayedInfo;
 
 public enum PlaceOfPlaying {
 
@@ -17,8 +17,8 @@ public enum PlaceOfPlaying {
 		this.description = description;
 	}
 
-	public Predicate<MatchPlayedInfo> execute(Team team){
-		return pred.isHome(team);
+	public Predicate<MatchPlayedInfo> chosenPlaceFilter(Team team){
+		return pred.isPlace(team);
 	}
 	
 	public String getDescription() {
@@ -26,22 +26,27 @@ public enum PlaceOfPlaying {
 	}
 
 	public static PlaceOfPlayingMatchPredicate homePlay() {
-	    return new PlaceOfPlayingMatchPredicate() {
+		return (Team team) -> {
+			return (MatchPlayedInfo m) -> m.isHost(team);	
+		};
+	    /*return new PlaceOfPlayingMatchPredicate() {
 			@Override
-			public Predicate<MatchPlayedInfo> isHome(Team team) {
+			public Predicate<MatchPlayedInfo> isPlace(Team team) {
 				return m -> m.isHost(team);
 			}
-	    };
+	    };*/
 	}
 
 	public static PlaceOfPlayingMatchPredicate awayPlay() {
-	    return new PlaceOfPlayingMatchPredicate() {
+		return (Team team) -> {
+			return (MatchPlayedInfo m) -> m.isAway(team);	
+		};
+	    /*return new PlaceOfPlayingMatchPredicate() {
 			@Override
-			public Predicate<MatchPlayedInfo> isHome(Team team) {
+			public Predicate<MatchPlayedInfo> isPlace(Team team) {
 				return m -> m.isAway(team);
 			}
-	    };
+	    };*/
 	}
-	
 	
 }
