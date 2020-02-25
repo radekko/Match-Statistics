@@ -17,8 +17,6 @@ import playing.Event.EventSnapshot;
 public class SingleTeamStats{
 	private final List<MatchPlayedInfo> matches;
 
-	//next 2 classes: set of statistics for allTeams and for all players
-	
 	public SingleTeamStats(List<MatchPlayedInfo> matches) {
 		this.matches = matches;
 	}

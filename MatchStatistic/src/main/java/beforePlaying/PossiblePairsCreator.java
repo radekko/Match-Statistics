@@ -21,7 +21,9 @@ class PossiblePairsCreator {
 	}
 
 	private static List<Pair> prepareListOfAllMatchesForCurrentTeam(Team choosenTeam, List<Team> remainsTeams) {
-		return remainsTeams.stream().mapToLong(p -> p.getId()).mapToObj(id -> new Pair(choosenTeam.getId(), id))
+		return remainsTeams.stream()
+				.mapToLong(p -> p.getId())
+				.mapToObj(id -> new Pair(choosenTeam.getId(), id))
 				.collect(Collectors.toList());
 	}
 

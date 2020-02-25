@@ -1,5 +1,6 @@
 package playing;
 
+import java.util.Objects;
 import java.util.function.Predicate;
 
 import beforePlaying.Player;
@@ -79,7 +80,7 @@ public class Event {
 		return "Event [team=" + team + ", player=" + player + ", minute=" + minute + ", eventType=" + eventType + "]";
 	}
 
-	public class EventSnapshot{
+	public static class EventSnapshot{
 		private Player player;
 		private int minute;
 		
@@ -96,6 +97,30 @@ public class Event {
 			return minute;
 		}
 		
+		@Override
+		public int hashCode() {
+			return Objects.hash(player, minute);
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			EventSnapshot other = (EventSnapshot) obj;
+			if (minute != other.minute)
+				return false;
+			if (player == null) {
+				if (other.player != null)
+					return false;
+			} else if (!player.equals(other.player))
+				return false;
+			return true;
+		}
+
 		@Override
 		public String toString() {
 			return player + " - minute: " + minute;
