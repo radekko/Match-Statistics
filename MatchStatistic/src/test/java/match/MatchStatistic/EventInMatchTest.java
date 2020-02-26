@@ -1,6 +1,9 @@
 package match.MatchStatistic;
 
-import static org.junit.Assert.*;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.hasItems;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -8,22 +11,18 @@ import org.junit.Test;
 
 import beforePlaying.Player;
 import beforePlaying.Team;
-import junit.framework.Assert;
 import playing.Event;
 import playing.EventType;
 import playing.EventsInMatch;
 
 public class EventInMatchTest {
-	
 	private static Player player;
-	private static Player player2;
 	private static Team team;
 	private EventsInMatch eventsInMatch;
 
 	@BeforeClass
 	public static void setUp() {
 		player = new Player(1);
-		player2 = new Player(2);
 		team = new Team(1l);
 	}
 	
@@ -32,7 +31,7 @@ public class EventInMatchTest {
 		eventsInMatch = new EventsInMatch();
 	}
 	
-	/*@Test
+	@Test
 	public void cannotAddFormerEvent() throws Exception {
 		Event event = prepareEvent(team, player, 81, EventType.YELLOW_CARD);
 		Event event2 = prepareEvent(team, player, 80, EventType.YELLOW_CARD);
@@ -40,8 +39,8 @@ public class EventInMatchTest {
 		eventsInMatch.addNextEvent(event);
 		eventsInMatch.addNextEvent(event2);
 		
-		Assert.assertEquals(eventsInMatch.getAmountOfEvents(), 1);
-		Assert.assertEquals(eventsInMatch.getYellowCards(player).get(0).getMinute(), 81);
+		assertEquals(eventsInMatch.getEvents().size(), 1);
+		assertThat(eventsInMatch.getEvents(), hasItem(event));
 	}
 	
 	@Test
@@ -52,9 +51,8 @@ public class EventInMatchTest {
 		eventsInMatch.addNextEvent(event);
 		eventsInMatch.addNextEvent(event2);
 		
-		Assert.assertEquals(eventsInMatch.getYellowCards(player).size(), 2);
-		Assert.assertEquals(eventsInMatch.getYellowCards(player).get(0).getMinute(), 80);
-		Assert.assertEquals(eventsInMatch.getYellowCards(player).get(1).getMinute(), 81);
+		assertEquals(eventsInMatch.getEvents().size(), 2);
+		assertThat(eventsInMatch.getEvents(), hasItems(event, event2));
 	}
 	
 	@Test
@@ -67,9 +65,8 @@ public class EventInMatchTest {
 		eventsInMatch.addNextEvent(event2);
 		eventsInMatch.addNextEvent(event3);
 		
-		Assert.assertEquals(eventsInMatch.getYellowCards(player).size(), 2);
-		Assert.assertEquals(eventsInMatch.getYellowCards(player).get(0).getMinute(), 80);
-		Assert.assertEquals(eventsInMatch.getYellowCards(player).get(1).getMinute(), 81);
+		assertEquals(eventsInMatch.getEvents().size(), 2);
+		assertThat(eventsInMatch.getEvents(), hasItems(event, event2));
 	}
 	
 	@Test
@@ -80,9 +77,8 @@ public class EventInMatchTest {
 		eventsInMatch.addNextEvent(event);
 		eventsInMatch.addNextEvent(event2);
 		
-		Assert.assertEquals(eventsInMatch.getYellowCards(player).size(), 1);
-		Assert.assertEquals(eventsInMatch.getYellowCards(player).get(0).getMinute(), 80);
-		Assert.assertEquals(eventsInMatch.getGoalMinutesForPlayer(player).size(), 1);
+		assertEquals(eventsInMatch.getEvents().size(), 2);
+		assertThat(eventsInMatch.getEvents(), hasItems(event, event2));
 	}
 	
 	@Test
@@ -95,10 +91,8 @@ public class EventInMatchTest {
 		eventsInMatch.addNextEvent(event2);
 		eventsInMatch.addNextEvent(event3);
 		
-		Assert.assertEquals(eventsInMatch.getYellowCards(player).size(), 2);
-		Assert.assertEquals(eventsInMatch.getYellowCards(player).get(0).getMinute(), 80);
-		Assert.assertEquals(eventsInMatch.getYellowCards(player).get(1).getMinute(), 81);
-		Assert.assertEquals(eventsInMatch.getGoalMinutesForPlayer(player).size(), 0);
+		assertEquals(eventsInMatch.getEvents().size(), 2);
+		assertThat(eventsInMatch.getEvents(), hasItems(event, event2));
 	}
 	
 	@Test
@@ -109,8 +103,8 @@ public class EventInMatchTest {
 		eventsInMatch.addNextEvent(event);
 		eventsInMatch.addNextEvent(event2);
 		
-		Assert.assertEquals(eventsInMatch.getRedCards(player).size(), 1);
-		Assert.assertEquals(eventsInMatch.getRedCards(player).get(0).getMinute(), 80);
+		assertEquals(eventsInMatch.getEvents().size(), 1);
+		assertThat(eventsInMatch.getEvents(), hasItems(event));
 	}
 	
 	@Test
@@ -121,34 +115,11 @@ public class EventInMatchTest {
 		eventsInMatch.addNextEvent(event);
 		eventsInMatch.addNextEvent(event2);
 		
-		Assert.assertEquals(eventsInMatch.getRedCards(player).size(),1);
-		Assert.assertEquals(eventsInMatch.getRedCards(player).get(0).getMinute(),80);
-		Assert.assertEquals(eventsInMatch.getGoalMinutesForPlayer(player).size(),0);
-	}
-	
-	@Test
-	public void addTwoYellowCardsToTheSameTeamAndCheckAmount() throws Exception {
-		Event event = prepareEvent(team, player, 80, EventType.YELLOW_CARD);
-		Event event2 = prepareEvent(team, player2, 81, EventType.YELLOW_CARD);
-
-		eventsInMatch.addNextEvent(event);
-		eventsInMatch.addNextEvent(event2);
-		
-		Assert.assertEquals(eventsInMatch.getTotalYellowCards(team),2);
-	}
-	
-	@Test
-	public void addTwoGoalsToTheSameTeamAndCheckAmount() throws Exception {
-		Event event = prepareEvent(team, player, 80, EventType.GOAL);
-		Event event2 = prepareEvent(team, player2, 81, EventType.GOAL);
-
-		eventsInMatch.addNextEvent(event);
-		eventsInMatch.addNextEvent(event2);
-		
-		Assert.assertEquals(eventsInMatch.getTotalGoalsInMatchForTeam(team),2);
+		assertEquals(eventsInMatch.getEvents().size(), 1);
+		assertThat(eventsInMatch.getEvents(), hasItems(event));
 	}
 	
 	private Event prepareEvent(Team team, Player player, int minute, EventType eventType) {
 		return new Event(team, player, minute, eventType);
-	}*/
+	}
 }
