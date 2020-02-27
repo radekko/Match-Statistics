@@ -6,9 +6,9 @@ import beforePlaying.Player;
 import beforePlaying.Team;
 
 public class PlayerStatisticsPrinter {
-	private final SinglePlayerStats playerStats;
+	private final TeamStatsByPlayers playerStats;
 
-	public PlayerStatisticsPrinter(SinglePlayerStats playerStats) {
+	public PlayerStatisticsPrinter(TeamStatsByPlayers playerStats) {
 		this.playerStats = playerStats;
 	}
 	
@@ -44,4 +44,3 @@ public class PlayerStatisticsPrinter {
 	}
 
 }
-

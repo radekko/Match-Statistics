@@ -4,8 +4,8 @@ import java.util.List;
 
 import afterPlaying.HistoryMatchesRepo;
 import afterPlaying.PlayerStatisticsPrinter;
-import afterPlaying.SinglePlayerStats;
-import afterPlaying.SingleTeamStats;
+import afterPlaying.TeamStatsByPlayers;
+import afterPlaying.TeamStats;
 import afterPlaying.TeamStatisticsPrinter;
 import beforePlaying.Schedule;
 import beforePlaying.Team;
@@ -40,7 +40,7 @@ public class Main
     	List<MatchPlayedInfo> historicalMatches = historyMatchesRepo.getAllHistory();
 
     	//PREPARE TO PRINTING TEAM STATISTICS
-    	SingleTeamStats teamStats = new SingleTeamStats(historicalMatches); 
+    	TeamStats teamStats = new TeamStats(historicalMatches); 
     	TeamStatisticsPrinter statisticsGenerator = new TeamStatisticsPrinter(teamStats);
 
     	//PRINT CHOOSEN TEAM STATS
@@ -51,23 +51,12 @@ public class Main
     	Team inspectedTeam2 = allTeams.getTeamById(3);
     	statisticsGenerator.printAllTeamStatistics(inspectedTeam2);
     	
-    	//PREPARE TO PRINTING TEAM STATS
-    	SinglePlayerStats playerStats = new SinglePlayerStats(teamStats);
+    	//PREPARE TO PRINTING PLAYER STATS
+    	TeamStatsByPlayers playerStats = new TeamStatsByPlayers(teamStats);
     	PlayerStatisticsPrinter pl = new PlayerStatisticsPrinter(playerStats);
     	
-    	//PRINT STATS FOR ALL PLAYER FROM TEAM ID=2
+    	//PRINT STATS FOR ALL PLAYER FOR TEAM ID=2
     	pl.printAll(inspectedTeam, inspectedTeam.getPlayers());
     	
-    	/*statisticsGenerator.printTeamStatistics(inspectedTeam);
-    	System.out.println("Player statistics for chosen team: ");
-    	
-		System.out.println("Goals: ");
-    	IntStream.range(0, 11).forEach(i -> statisticsGenerator.printGoalsForPlayer(inspectedTeam, inspectedTeam.getPlayers().get(i)));*/
-    	
-    	//first get all teams 
-    	//then get all players from team
-    	
     }
-
 }
-

@@ -13,11 +13,12 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import afterPlaying.SingleTeamStats;
+import afterPlaying.TeamStats;
 import beforePlaying.FutureMatch;
 import beforePlaying.Player;
 import beforePlaying.Team;
 import playing.Event;
+import playing.Event.EventSnapshot;
 import playing.EventType;
 import playing.EventsInMatch;
 import playing.MatchPlayedInfo;
@@ -25,9 +26,21 @@ import playing.MatchPlayedInfo;
 public class TeamStatsTest {
 
 	private List<MatchPlayedInfo> matches;
-	private SingleTeamStats teamStats;
+	private TeamStats teamStats;
 	private Team team;
 	private Team team2;
+	private Player p; 
+	private Player p2;
+	private Player p3;
+	private Player p4;
+	private Player p5;
+	private Player p6;
+	private Event pScoreForTeamIn1MinuteFirstMatch;
+	private Event p2ScoreForTeamIn12MinuteFirstMatch; 
+	private Event p4ScoreForTeam2In61MinuteFirstMatch;
+	private Event p4ScoreForTeam2In60MinuteSecondMatch;
+	private Event pScoreForTeamIn11MinuteSecondMatch;
+	private Event p2ScoreForTeamIn21MinuteSecondMatch;
 
 	/*
 	 	Prepare two matches:
@@ -38,12 +51,12 @@ public class TeamStatsTest {
 	public void setUp() {
 		matches = new ArrayList<>();
 
-		Player p = new Player(1);
-		Player p2 = new Player(2);
-		Player p3 = new Player(3);
-		Player p4 = new Player(4);
-		Player p5 = new Player(5);
-		Player p6 = new Player(6);
+		p = new Player(1);
+		p2 = new Player(2);
+		p3 = new Player(3);
+		p4 = new Player(4);
+		p5 = new Player(5);
+		p6 = new Player(6);
 
 		List<Player> players = new ArrayList<>(Arrays.asList(p, p2, p3));
 		List<Player> players2 = new ArrayList<>(Arrays.asList(p4, p5, p6));
@@ -51,19 +64,21 @@ public class TeamStatsTest {
 		team = new Team(1, players);
 		team2 = new Team(2, players2);
 		
-		Event ev = new Event(team, p, 1, EventType.GOAL);
-		Event ev2 = new Event(team, p2, 12, EventType.GOAL);
-		Event ev3 = new Event(team2, p4, 61, EventType.GOAL);
-		MatchPlayedInfo m = prepareMatchPlayedInfo(team, team2, ev, ev2, ev3);
+		pScoreForTeamIn1MinuteFirstMatch = new Event(team, p, 1, EventType.GOAL);
+		p2ScoreForTeamIn12MinuteFirstMatch = new Event(team, p2, 12, EventType.GOAL);
+		p4ScoreForTeam2In61MinuteFirstMatch = new Event(team2, p4, 61, EventType.GOAL);
+		MatchPlayedInfo m = prepareMatchPlayedInfo(
+				team, team2, pScoreForTeamIn1MinuteFirstMatch, p2ScoreForTeamIn12MinuteFirstMatch, p4ScoreForTeam2In61MinuteFirstMatch);
 		matches.add(m);
 		
-		Event ev6 = new Event(team2, p4, 60, EventType.GOAL);
-		Event ev4 = new Event(team, p, 11, EventType.GOAL);
-		Event ev5 = new Event(team, p2, 21, EventType.GOAL);
-		MatchPlayedInfo m2 = prepareMatchPlayedInfo(team2, team, ev4, ev5, ev6);
+		pScoreForTeamIn11MinuteSecondMatch = new Event(team, p, 11, EventType.GOAL);
+		p2ScoreForTeamIn21MinuteSecondMatch = new Event(team, p2, 21, EventType.GOAL);
+		p4ScoreForTeam2In60MinuteSecondMatch = new Event(team2, p4, 60, EventType.GOAL);
+		MatchPlayedInfo m2 = prepareMatchPlayedInfo(
+				team2, team, pScoreForTeamIn11MinuteSecondMatch, p2ScoreForTeamIn21MinuteSecondMatch, p4ScoreForTeam2In60MinuteSecondMatch);
 		matches.add(m2);
 		
-		teamStats = new SingleTeamStats(matches);
+		teamStats = new TeamStats(matches);
 	}
 	
 	@Test
@@ -84,8 +99,8 @@ public class TeamStatsTest {
 	public void testScorersInHomeForTeam() throws Exception {
 		assertThat(teamStats.getGoalsInHome(team), 
 			hasItems(
-						new Event(team, new Player(1), 1, EventType.GOAL).prepareSnapshot(), 
-						new Event(team, new Player(2), 12, EventType.GOAL).prepareSnapshot()
+						toEventSnapshot(pScoreForTeamIn1MinuteFirstMatch), 
+						toEventSnapshot(p2ScoreForTeamIn12MinuteFirstMatch) 
 					)
 			);
 	}
@@ -94,8 +109,8 @@ public class TeamStatsTest {
 	public void testScorersAwayForTeam() throws Exception {
 		assertThat(teamStats.getGoalsAway(team), 
 			hasItems(
-						new Event(team, new Player(1), 11, EventType.GOAL).prepareSnapshot(), 
-						new Event(team, new Player(2), 21, EventType.GOAL).prepareSnapshot()
+						toEventSnapshot(pScoreForTeamIn11MinuteSecondMatch),
+						toEventSnapshot(p2ScoreForTeamIn21MinuteSecondMatch)
 					)
 			);
 	}
@@ -104,7 +119,7 @@ public class TeamStatsTest {
 	public void testScorersInHomeForTeam2() throws Exception {
 		assertThat(teamStats.getGoalsInHome(team2), 
 			hasItems(
-						new Event(team2, new Player(4), 60, EventType.GOAL).prepareSnapshot()
+					toEventSnapshot(p4ScoreForTeam2In60MinuteSecondMatch)
 					)
 			);
 	}
@@ -113,7 +128,7 @@ public class TeamStatsTest {
 	public void testScorersAwayForTeam2() throws Exception {
 		assertThat(teamStats.getGoalsAway(team2), 
 			hasItems(
-						new Event(team2, new Player(4), 61, EventType.GOAL).prepareSnapshot()
+						toEventSnapshot(p4ScoreForTeam2In61MinuteFirstMatch)
 					)
 			);
 	}
@@ -123,10 +138,10 @@ public class TeamStatsTest {
 		assertThat(teamStats.getGoals(team), hasSize(4)); 
 		assertThat(teamStats.getGoals(team), 
 			hasItems(
-						new Event(team, new Player(1), 11, EventType.GOAL).prepareSnapshot(), 
-						new Event(team, new Player(2), 21, EventType.GOAL).prepareSnapshot(),
-						new Event(team, new Player(1), 11, EventType.GOAL).prepareSnapshot(), 
-						new Event(team, new Player(2), 21, EventType.GOAL).prepareSnapshot()
+						toEventSnapshot(pScoreForTeamIn1MinuteFirstMatch),
+						toEventSnapshot(p2ScoreForTeamIn12MinuteFirstMatch),
+						toEventSnapshot(pScoreForTeamIn11MinuteSecondMatch),
+						toEventSnapshot(p2ScoreForTeamIn21MinuteSecondMatch)
 					)
 			);
 	}
@@ -136,20 +151,24 @@ public class TeamStatsTest {
 		assertThat(teamStats.getGoals(team2), hasSize(2)); 
 		assertThat(teamStats.getGoals(team2), 
 			hasItems(
-						new Event(team2, new Player(4), 60, EventType.GOAL).prepareSnapshot(), 
-						new Event(team2, new Player(4), 61, EventType.GOAL).prepareSnapshot()
+						toEventSnapshot(p4ScoreForTeam2In61MinuteFirstMatch),
+						toEventSnapshot(p4ScoreForTeam2In60MinuteSecondMatch)
 					)
 			);
+	}
+	
+	private EventSnapshot toEventSnapshot(Event event){
+		return event.prepareSnapshot();
 	}
 
 	private MatchPlayedInfo prepareMatchPlayedInfo(Team homeTeam, Team awayTeam, Event... events) {
 		FutureMatch matchToPlay = prepareFutureMatch(homeTeam, awayTeam);
 		EventsInMatch eventsInMatch = new EventsInMatch();
-		
 		for(Event event : events)
 			eventsInMatch.addNextEvent(event);
-
-		return new MatchPlayedInfo(matchToPlay, 1000, eventsInMatch);
+		
+		MatchPlayedInfo temp = new MatchPlayedInfo(matchToPlay, 1000, eventsInMatch);
+		return temp;
 	}
 	
 

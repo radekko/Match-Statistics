@@ -1,23 +1,19 @@
 package afterPlaying;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import beforePlaying.Player;
 import beforePlaying.Team;
 import playing.Event;
-import playing.MatchPlayedInfo;
 import playing.Event.EventSnapshot;
+import playing.MatchPlayedInfo;
 
-public class SingleTeamStats{
+public class TeamStats{
 	private final List<MatchPlayedInfo> matches;
 
-	public SingleTeamStats(List<MatchPlayedInfo> matches) {
+	public TeamStats(List<MatchPlayedInfo> matches) {
 		this.matches = matches;
 	}
 	
@@ -65,22 +61,5 @@ public class SingleTeamStats{
 				.filter(place.chosenPlaceFilter(team))
 				.flatMap(m -> m.findEventsForTeam(eventType,team));
 	}
-	
-	/*public List<EventSnapshot> getHomeOrAwayEvents(Team team, PlaceOfPlaying pred, Function<MatchPlayedInfo, List<EventSnapshot>> whichStats) {
-		return matches.stream()
-				.filter(pred.chosenPlaceFilter(team))
-				.map(whichStats)
-				.flatMap(List::stream)
-				.collect(Collectors.toList());
-	}
-	
-	public List<EventSnapshot> getSumOfEvents(Team team, 
-			Function<MatchPlayedInfo, List<EventSnapshot>> homeEvents, 
-			Function<MatchPlayedInfo, List<EventSnapshot>> awayEvents) {
-		List<EventSnapshot> result = new ArrayList<>();
-		result.addAll(getHomeOrAwayEvents(team, PlaceOfPlaying.HOME, homeEvents));
-		result.addAll(getHomeOrAwayEvents(team, PlaceOfPlaying.AWAY, awayEvents));
-		return result;
-	}*/
 	
 }

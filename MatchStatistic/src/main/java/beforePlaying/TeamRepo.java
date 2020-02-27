@@ -8,7 +8,6 @@ public class TeamRepo {
 	
 	public TeamRepo() {
 		for (int i = 1; i < 5; i++) {
-    		
     		List<Player> players = new ArrayList<>();
     		for (int j = startIndex(i); j < startIndex(i) + 11; j++) {
     			players.add(new Player(j));
