@@ -4,9 +4,11 @@ import java.util.List;
 
 import afterPlaying.HistoryMatchesRepo;
 import afterPlaying.PlayerStatisticsPrinter;
-import afterPlaying.TeamStatsByPlayers;
-import afterPlaying.TeamStats;
 import afterPlaying.TeamStatisticsPrinter;
+import afterPlaying.TeamStats;
+import afterPlaying.TeamStatsByPlayers;
+import afterPlaying.TeamsStatisticsPrinter;
+import afterPlaying.TeamsStats;
 import beforePlaying.Schedule;
 import beforePlaying.Team;
 import beforePlaying.TeamRepo;
@@ -57,6 +59,14 @@ public class Main
     	
     	//PRINT STATS FOR ALL PLAYER FOR TEAM ID=2
     	pl.printAll(inspectedTeam, inspectedTeam.getPlayers());
+    	
+    	//STATS BY TEAMS
+    	//get the most goals scorers by team
+    	TeamsStats teamsStats = new TeamsStats(allTeams, teamStats); 
+    	
+    	TeamsStatisticsPrinter teamsStatisticsPrinter = new TeamsStatisticsPrinter(teamsStats);
+    	teamsStatisticsPrinter.printAll();
+    	
     	
     }
 }

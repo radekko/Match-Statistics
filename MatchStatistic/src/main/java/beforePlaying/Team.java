@@ -3,7 +3,7 @@ package beforePlaying;
 import java.util.List;
 
 
-public class Team{
+public class Team implements Comparable<Team> {
 	private final long id;
 	private List<Player> players;
 
@@ -20,7 +20,6 @@ public class Team{
 		return players;
 	}
 	
-	
 	public void addPlayers(List<Player> players) {
 		players.addAll(players);
 	}
@@ -36,5 +35,10 @@ public class Team{
 	@Override
 	public String toString() {
 		return "Team id=" + id;
+	}
+
+	@Override
+	public int compareTo(Team o) {
+		return Long.compare(id, o.id);
 	}
 }

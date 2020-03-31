@@ -16,7 +16,6 @@ public class TeamRepo {
     		Team team = new Team(i, players);
 			teams.add(team);
 		}
-		
 	}
 
 	private int startIndex(int i) {

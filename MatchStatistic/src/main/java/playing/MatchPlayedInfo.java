@@ -33,6 +33,10 @@ public class MatchPlayedInfo {
 		return  team == awayTeam ? true : false; 
 	}
 	
+	public Stream<Team> getTeams(){
+		return Stream.of(homeTeam, awayTeam);
+	}
+	
 	public int getLigueLine() {
 		return ligueLine;
 	}
@@ -44,6 +48,12 @@ public class MatchPlayedInfo {
 	public Stream<EventSnapshot> findEventsForTeam(Predicate<Event> predEventType, Team team){
 		return events.stream()
 				   .filter(predEventType.and(Event.isForTeam(team)))
+				   .map(Event::prepareSnapshot);
+	}
+	
+	public Stream<EventSnapshot> findEvents(Predicate<Event> predEventType){
+		return events.stream()
+				   .filter(predEventType)
 				   .map(Event::prepareSnapshot);
 	}
 	
