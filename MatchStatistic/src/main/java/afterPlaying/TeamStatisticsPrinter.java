@@ -13,13 +13,13 @@ public class TeamStatisticsPrinter {
 	
 	public void printAllTeamsStatistics(List<Team> teams) {
 		teams.stream().forEach(this::printAllTeamStatistics);
+		System.out.println();
 	}
 	
 	public void printAllTeamStatistics(Team team) {
     	System.out.println("General statistics for " + team);
     	System.out.println("-------------------------------------------------");
 		printGoalsStatistics(team);
-		System.out.println();
 		System.out.println();
 	}
 

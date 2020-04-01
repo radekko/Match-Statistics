@@ -4,6 +4,8 @@ import java.util.List;
 
 import afterPlaying.HistoryMatchesRepo;
 import afterPlaying.PlayerStatisticsPrinter;
+import afterPlaying.PlayerStatisticsWithinTeamsPrinter;
+import afterPlaying.PlayersStats;
 import afterPlaying.TeamStatisticsPrinter;
 import afterPlaying.TeamStats;
 import afterPlaying.TeamStatsByPlayers;
@@ -34,18 +36,17 @@ public class Main
 		historyMatchesRepo.storeAllMatchesInHistory(matchesPlayed);
     	
     	//PRINT INFO ABOUT LIGUE AND PLAYED MATCHES DETAILS
-    	System.out.println("Played ligue lines: " + drawingMatches.getTotalLines() + "\n");
+		printHeader(1, "AFTER PLAYING");
+		System.out.println("Played ligue lines: " + drawingMatches.getTotalLines() + "\n");
     	System.out.println("FINAL RESULTATS:"+ "\n");
     	historyMatchesRepo.printPlayedMatchesGroupingByLigueLine();
     	
-    	//GET ALL HISTORY
-    	List<MatchPlayedInfo> historicalMatches = historyMatchesRepo.getAllHistory();
-
     	//PREPARE TO PRINTING TEAM STATISTICS
-    	TeamStats teamStats = new TeamStats(historicalMatches); 
+    	TeamStats teamStats = new TeamStats(historyMatchesRepo); 
     	TeamStatisticsPrinter statisticsGenerator = new TeamStatisticsPrinter(teamStats);
 
     	//PRINT CHOOSEN TEAM STATS
+    	printHeader(2, "TEAM STATS");
     	Team inspectedTeam = allTeams.getTeamById(2);
     	statisticsGenerator.printAllTeamStatistics(inspectedTeam);
     	
@@ -54,19 +55,30 @@ public class Main
     	statisticsGenerator.printAllTeamStatistics(inspectedTeam2);
     	
     	//PREPARE TO PRINTING PLAYER STATS
+    	printHeader(3, "PLAYER STATS WITHIN TEAM");
     	TeamStatsByPlayers playerStats = new TeamStatsByPlayers(teamStats);
-    	PlayerStatisticsPrinter pl = new PlayerStatisticsPrinter(playerStats);
+    	PlayerStatisticsWithinTeamsPrinter pl = new PlayerStatisticsWithinTeamsPrinter(playerStats);
     	
     	//PRINT STATS FOR ALL PLAYER FOR TEAM ID=2
-    	pl.printAll(inspectedTeam, inspectedTeam.getPlayers());
+    	pl.printAll(inspectedTeam);
     	
     	//STATS BY TEAMS
-    	//get the most goals scorers by team
+    	printHeader(4, "GENERAL STATS GROUPING BY TEAMS");
     	TeamsStats teamsStats = new TeamsStats(allTeams, teamStats); 
-    	
     	TeamsStatisticsPrinter teamsStatisticsPrinter = new TeamsStatisticsPrinter(teamsStats);
     	teamsStatisticsPrinter.printAll();
     	
-    	
+    	//STATS BY PLAYERS
+    	printHeader(5, "GENERAL STATS GROUPING BY PLAYERS");
+    	PlayersStats playersStats = new PlayersStats(allTeams, playerStats);
+    	PlayerStatisticsPrinter playerStatisticsPrinter = new PlayerStatisticsPrinter(playersStats);
+    	playerStatisticsPrinter.printAll();
     }
+	
+	private static void printHeader(int moduleNumber, String message) {
+		System.out.print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+		System.out.print("MODULE: " + moduleNumber + " - " + message);
+		System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+		System.out.println();
+	}
 }

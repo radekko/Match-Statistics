@@ -1,46 +1,58 @@
 package afterPlaying;
 
-import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
+
+import com.google.common.collect.Multimap;
 
 import beforePlaying.Player;
-import beforePlaying.Team;
 
 public class PlayerStatisticsPrinter {
-	private final TeamStatsByPlayers playerStats;
+	private final PlayersStats playersStats;
 
-	public PlayerStatisticsPrinter(TeamStatsByPlayers playerStats) {
-		this.playerStats = playerStats;
+	public PlayerStatisticsPrinter(PlayersStats playersStats) {
+		this.playersStats = playersStats;
 	}
 	
-	public void printAll(Team team, List<Player> player) {
+	public void printAll() {
 		System.out.println("-------------------------------------------------");
-		System.out.println("Players statistic for " + team);
-    	System.out.println("-------------------------------------------------");
-    	
-    	System.out.println("Home goals");
-    	System.out.println("*************************");
-		player.stream().forEach(p -> printPlayerHomeGoals(team, p));
-		System.out.println();
-		System.out.println("Away goals");
-		System.out.println("*************************");
-		player.stream().forEach(p -> printPlayerAwayGoals(team, p));
-		System.out.println();
-		System.out.println("Total goals");
-		System.out.println("*************************");
-		player.stream().forEach(p -> printPlayerAllGoals(team, p));
+		System.out.println("Best players by goals");
+		System.out.println("-------------------------------------------------");
+		printBestGoalScorers();
 		
+		System.out.println();
+		System.out.println("-------------------------------------------------");
+		System.out.println("Best players by goals in home");
+		System.out.println("-------------------------------------------------");
+		printBestGoalScorersInHome();
+		
+		System.out.println();
+		System.out.println("-------------------------------------------------");
+		System.out.println("Best players by goals away");
+		System.out.println("-------------------------------------------------");
+		printBestGoalScorersAway();
 	}
-
-	private void printPlayerAllGoals(Team team, Player p) {
-		System.out.println("Player id: " + p.getId() + " - " + playerStats.getPlayerTotalGoals(p, team));
+	
+	public void printBestGoalScorers() {
+		printLeaderBoard(playersStats.getBestPlayersByTotalGoals());
 	}
-
-	private void printPlayerAwayGoals(Team team, Player p) {
-		System.out.println("Player id: " + p.getId() + " - " + playerStats.getPlayerAwayGoals(p, team));
+	
+	public void printBestGoalScorersInHome() {
+		printLeaderBoard(playersStats.getBestPlayersByHomeGoals());
 	}
-
-	private void printPlayerHomeGoals(Team team, Player p) {
-		System.out.println("Player id: " + p.getId() + " - " + playerStats.getPlayerHomeGoals(p, team));
+	
+	public void printBestGoalScorersAway() {
+		printLeaderBoard(playersStats.getBestPlayersByAwayGoals());
 	}
-
+	
+	private void printLeaderBoard(Multimap<Integer, Player> leaderboard) {
+		Set<Integer> numberOfGoalsDesceding = new TreeSet<>(leaderboard.keySet()).descendingSet();
+		
+		for(Integer num : numberOfGoalsDesceding) {
+			System.out.print(num + " goals: ");
+			System.out.println(leaderboard.get(num).stream().map(String::valueOf).collect(Collectors.joining(", ")));
+		}
+	}
+	
 }

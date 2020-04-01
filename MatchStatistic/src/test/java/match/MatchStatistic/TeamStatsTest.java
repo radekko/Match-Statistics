@@ -13,6 +13,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import afterPlaying.HistoryMatchesRepo;
 import afterPlaying.TeamStats;
 import beforePlaying.FutureMatch;
 import beforePlaying.Player;
@@ -26,6 +27,7 @@ import playing.MatchPlayedInfo;
 public class TeamStatsTest {
 
 	private List<MatchPlayedInfo> matches;
+	private HistoryMatchesRepo historyMatchesRepo;
 	private TeamStats teamStats;
 	private Team team;
 	private Team team2;
@@ -78,7 +80,10 @@ public class TeamStatsTest {
 				team2, team, pScoreForTeamIn11MinuteSecondMatch, p2ScoreForTeamIn21MinuteSecondMatch, p4ScoreForTeam2In60MinuteSecondMatch);
 		matches.add(m2);
 		
-		teamStats = new TeamStats(matches);
+		historyMatchesRepo = new HistoryMatchesRepo();
+		historyMatchesRepo.storeAllMatchesInHistory(matches);
+		
+		teamStats = new TeamStats(historyMatchesRepo);
 	}
 	
 	@Test

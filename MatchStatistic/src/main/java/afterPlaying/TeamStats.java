@@ -13,8 +13,8 @@ import playing.MatchPlayedInfo;
 public class TeamStats{
 	private final List<MatchPlayedInfo> matches;
 
-	public TeamStats(List<MatchPlayedInfo> matches) {
-		this.matches = matches;
+	public TeamStats(HistoryMatchesRepo historyMatchesRepo) {
+		this.matches = historyMatchesRepo.getAllHistory();
 	}
 	
 	public int getTotalHomeGoals(Team team) {

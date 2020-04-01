@@ -2,7 +2,7 @@ package beforePlaying;
 
 import java.util.Objects;
 
-public class Player{
+public class Player implements Comparable<Player>{
 	private int id;
 	
 	public Player(int id) {
@@ -34,6 +34,10 @@ public class Player{
 		if (id != other.id)
 			return false;
 		return true;
+	}
+	@Override
+	public int compareTo(Player o) {
+		return Integer.compare(id, o.id);
 	}
 	
 }

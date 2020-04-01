@@ -19,6 +19,7 @@ public class TeamsStatisticsPrinter {
 		printTeamsByGoals();
 		printTeamsByGoalsInHome();
 		printTeamsByGoalsAway();
+		System.out.println();
 	}
 
 	private void printTeamsByGoals() {
@@ -34,12 +35,12 @@ public class TeamsStatisticsPrinter {
 	}
 	
 	private void printLeaderBoard(Multimap<Integer, Team> leaderboard, String desc) {
-		System.out.println();
 		System.out.println("-------------------------------------------------");
 		System.out.println("Best teams by goals " + desc);
 		System.out.println("-------------------------------------------------");
 		
 		Set<Integer> numberOfGoalsDesceding = new TreeSet<>(leaderboard.keySet()).descendingSet();
+		numberOfGoalsDesceding.remove(0);
 		
 		for(Integer num : numberOfGoalsDesceding) {
 			System.out.print(num + " goals: ");
