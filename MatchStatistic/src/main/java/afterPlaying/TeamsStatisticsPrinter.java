@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import com.google.common.collect.Multimap;
 
 import beforePlaying.Team;
+import playing.Event;
 
 public class TeamsStatisticsPrinter {
 	private final TeamsStats teamsStats;
@@ -23,18 +24,18 @@ public class TeamsStatisticsPrinter {
 	}
 
 	private void printTeamsByGoals() {
-		printLeaderBoard(teamsStats.groupByBestGoalScorersTotal(),"total");
+		printLeaderboard(teamsStats.createLeaderboardForAllTeams(PlaceOfPlaying.HOME_OR_AWAY, Event.isGoal()),"total");
 	}
 	
 	private void printTeamsByGoalsInHome() {
-		printLeaderBoard(teamsStats.groupByBestGoalScorersInHome(),"in home");
+		printLeaderboard(teamsStats.createLeaderboardForAllTeams(PlaceOfPlaying.HOME, Event.isGoal()),"in home");
 	}
 	
 	private void printTeamsByGoalsAway() {
-		printLeaderBoard(teamsStats.groupByBestGoalScorersAway(),"away");
+		printLeaderboard(teamsStats.createLeaderboardForAllTeams(PlaceOfPlaying.AWAY, Event.isGoal()),"away");
 	}
 	
-	private void printLeaderBoard(Multimap<Integer, Team> leaderboard, String desc) {
+	private void printLeaderboard(Multimap<Integer, Team> leaderboard, String desc) {
 		System.out.println("-------------------------------------------------");
 		System.out.println("Best teams by goals " + desc);
 		System.out.println("-------------------------------------------------");

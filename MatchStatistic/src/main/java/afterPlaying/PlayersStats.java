@@ -1,13 +1,13 @@
 package afterPlaying;
 
-import java.util.function.Function;
+import java.util.function.Predicate;
 
 import com.google.common.collect.Multimap;
 import com.google.common.collect.TreeMultimap;
 
 import beforePlaying.Player;
-import beforePlaying.Team;
 import beforePlaying.Teams;
+import playing.Event;
 
 public class PlayersStats {
 	private final TeamStatsByPlayers teamStatsByPlayers;
@@ -18,22 +18,15 @@ public class PlayersStats {
 		this.teamStatsByPlayers = teamStatsByPlayers;
 	}
 	
-	public Multimap<Integer, Player> getBestPlayersByTotalGoals() {
-		return createPlayerLeaderboard(teamStatsByPlayers :: getPlayerTotalGoals);
-	}
-	
-	public Multimap<Integer, Player> getBestPlayersByHomeGoals() {
-		return createPlayerLeaderboard(teamStatsByPlayers :: getPlayerHomeGoals);
-	}
-	
-	public Multimap<Integer, Player> getBestPlayersByAwayGoals() {
-		return createPlayerLeaderboard(teamStatsByPlayers :: getPlayerAwayGoals);
-	}
-	
-	private Multimap<Integer, Player> createPlayerLeaderboard(Function<Team, Multimap<Integer, Player>> extractingPlayers){
+	public Multimap<Integer, Player> createPlayerLeaderboard(PlaceOfPlaying place, Predicate<Event> eventType){
 		Multimap<Integer, Player> playersLeaderboard = TreeMultimap.create();
-		teams.getAll().stream().map(extractingPlayers::apply).forEach(playersLeaderboard :: putAll);
+		teams.getAll().stream()
+			.map(
+					team -> teamStatsByPlayers.getPlayersStatisticsInChosenTeam(team, place, eventType)
+				)
+			.forEach(playersLeaderboard :: putAll);
 		
 		return playersLeaderboard;
 	}
+
 }

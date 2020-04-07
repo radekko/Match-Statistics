@@ -3,6 +3,7 @@ package afterPlaying;
 import java.util.List;
 
 import beforePlaying.Team;
+import playing.Event;
 
 public class TeamStatisticsPrinter {
 	private final TeamStats teamStats;
@@ -25,11 +26,11 @@ public class TeamStatisticsPrinter {
 
 	private void printGoalsStatistics(Team team) {
 		System.out.println("Home goals: ");
-		System.out.println(teamStats.getTotalHomeGoals(team));
+		System.out.println(teamStats.getTotalEventsForChosenPlace(team, PlaceOfPlaying.HOME, Event.isGoal()));
 		System.out.println("Away goals: ");
-		System.out.println(teamStats.getTotalAwayGoals(team));
+		System.out.println(teamStats.getTotalEventsForChosenPlace(team, PlaceOfPlaying.AWAY, Event.isGoal()));
 		System.out.println("Total goals: ");
-		System.out.println(teamStats.getTotalGoals(team));
+		System.out.println(teamStats.getTotalEventsForChosenPlace(team, PlaceOfPlaying.HOME_OR_AWAY, Event.isGoal()));
 	}
 	
 }

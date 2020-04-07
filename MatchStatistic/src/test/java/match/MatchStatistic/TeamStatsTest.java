@@ -14,6 +14,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import afterPlaying.HistoryMatchesRepo;
+import afterPlaying.PlaceOfPlaying;
 import afterPlaying.TeamStats;
 import beforePlaying.FutureMatch;
 import beforePlaying.Player;
@@ -88,21 +89,21 @@ public class TeamStatsTest {
 	
 	@Test
 	public void testNumberOfGoalsForTeam() throws Exception {
-		assertEquals(teamStats.getTotalHomeGoals(team), 2);
-		assertEquals(teamStats.getTotalAwayGoals(team), 2);
-		assertEquals(teamStats.getTotalGoals(team), 4);
+		assertEquals(teamStats.getTotalEventsForChosenPlace(team, PlaceOfPlaying.HOME, Event.isGoal()), 2);
+		assertEquals(teamStats.getTotalEventsForChosenPlace(team, PlaceOfPlaying.AWAY, Event.isGoal()), 2);
+		assertEquals(teamStats.getTotalEventsForChosenPlace(team, PlaceOfPlaying.HOME_OR_AWAY, Event.isGoal()), 4);
 	}
 	
 	@Test
 	public void testNumberOfGoalsForTeam2() throws Exception {
-		assertEquals(teamStats.getTotalHomeGoals(team2), 1);
-		assertEquals(teamStats.getTotalAwayGoals(team2), 1);
-		assertEquals(teamStats.getTotalGoals(team2), 2);
+		assertEquals(teamStats.getTotalEventsForChosenPlace(team, PlaceOfPlaying.HOME, Event.isGoal()), 2);
+		assertEquals(teamStats.getTotalEventsForChosenPlace(team, PlaceOfPlaying.AWAY, Event.isGoal()), 2);
+		assertEquals(teamStats.getTotalEventsForChosenPlace(team, PlaceOfPlaying.HOME_OR_AWAY, Event.isGoal()), 4);
 	}
 	
 	@Test
 	public void testScorersInHomeForTeam() throws Exception {
-		assertThat(teamStats.getGoalsInHome(team), 
+		assertThat(teamStats.getEvents(team, PlaceOfPlaying.HOME, Event.isGoal()), 
 			hasItems(
 						toEventSnapshot(pScoreForTeamIn1MinuteFirstMatch), 
 						toEventSnapshot(p2ScoreForTeamIn12MinuteFirstMatch) 
@@ -112,7 +113,7 @@ public class TeamStatsTest {
 	
 	@Test
 	public void testScorersAwayForTeam() throws Exception {
-		assertThat(teamStats.getGoalsAway(team), 
+		assertThat(teamStats.getEvents(team, PlaceOfPlaying.AWAY, Event.isGoal()), 
 			hasItems(
 						toEventSnapshot(pScoreForTeamIn11MinuteSecondMatch),
 						toEventSnapshot(p2ScoreForTeamIn21MinuteSecondMatch)
@@ -122,7 +123,7 @@ public class TeamStatsTest {
 	
 	@Test
 	public void testScorersInHomeForTeam2() throws Exception {
-		assertThat(teamStats.getGoalsInHome(team2), 
+		assertThat(teamStats.getEvents(team2, PlaceOfPlaying.HOME, Event.isGoal()), 
 			hasItems(
 					toEventSnapshot(p4ScoreForTeam2In60MinuteSecondMatch)
 					)
@@ -131,7 +132,7 @@ public class TeamStatsTest {
 	
 	@Test
 	public void testScorersAwayForTeam2() throws Exception {
-		assertThat(teamStats.getGoalsAway(team2), 
+		assertThat(teamStats.getEvents(team2, PlaceOfPlaying.AWAY, Event.isGoal()), 
 			hasItems(
 						toEventSnapshot(p4ScoreForTeam2In61MinuteFirstMatch)
 					)
@@ -140,8 +141,8 @@ public class TeamStatsTest {
 	
 	@Test
 	public void testScorersTotalForTeam() throws Exception {
-		assertThat(teamStats.getGoals(team), hasSize(4)); 
-		assertThat(teamStats.getGoals(team), 
+		assertThat(teamStats.getEvents(team, PlaceOfPlaying.HOME_OR_AWAY, Event.isGoal()), hasSize(4)); 
+		assertThat(teamStats.getEvents(team, PlaceOfPlaying.HOME_OR_AWAY, Event.isGoal()), 
 			hasItems(
 						toEventSnapshot(pScoreForTeamIn1MinuteFirstMatch),
 						toEventSnapshot(p2ScoreForTeamIn12MinuteFirstMatch),
@@ -153,8 +154,8 @@ public class TeamStatsTest {
 	
 	@Test
 	public void testScorersTotalForTeam2() throws Exception {
-		assertThat(teamStats.getGoals(team2), hasSize(2)); 
-		assertThat(teamStats.getGoals(team2), 
+		assertThat(teamStats.getEvents(team2, PlaceOfPlaying.HOME_OR_AWAY, Event.isGoal()), hasSize(2)); 
+		assertThat(teamStats.getEvents(team2, PlaceOfPlaying.HOME_OR_AWAY, Event.isGoal()), 
 			hasItems(
 						toEventSnapshot(p4ScoreForTeam2In61MinuteFirstMatch),
 						toEventSnapshot(p4ScoreForTeam2In60MinuteSecondMatch)

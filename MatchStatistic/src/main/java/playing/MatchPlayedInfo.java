@@ -33,6 +33,12 @@ public class MatchPlayedInfo {
 		return  team == awayTeam ? true : false; 
 	}
 	
+	public boolean isHomeOrAway(Team team){
+		return  
+				team == homeTeam ? true : false ||
+				team == awayTeam ? true : false; 
+	}
+	
 	public Stream<Team> getTeams(){
 		return Stream.of(homeTeam, awayTeam);
 	}

@@ -8,6 +8,7 @@ import com.google.common.collect.Multimap;
 
 import beforePlaying.Player;
 import beforePlaying.Team;
+import playing.Event;
 
 public class PlayerStatisticsWithinTeamsPrinter {
 	private final TeamStatsByPlayers playerStats;
@@ -23,17 +24,17 @@ public class PlayerStatisticsWithinTeamsPrinter {
     	
     	System.out.println("Home goals");
     	System.out.println("*************************");
-    	printPlayersLeaderboard(playerStats.getPlayerHomeGoals(team));
+    	printPlayersLeaderboard(playerStats.getPlayersStatisticsInChosenTeam(team, PlaceOfPlaying.HOME, Event.isGoal()));
 		System.out.println();
 		
 		System.out.println("Away goals");
 		System.out.println("*************************");
-		printPlayersLeaderboard(playerStats.getPlayerAwayGoals(team));
+		printPlayersLeaderboard(playerStats.getPlayersStatisticsInChosenTeam(team, PlaceOfPlaying.AWAY, Event.isGoal()));
 		System.out.println();
 		
 		System.out.println("Total goals");
 		System.out.println("*************************");
-		printPlayersLeaderboard(playerStats.getPlayerTotalGoals(team));
+		printPlayersLeaderboard(playerStats.getPlayersStatisticsInChosenTeam(team, PlaceOfPlaying.HOME_OR_AWAY, Event.isGoal()));
 		System.out.println();
 	}
 
