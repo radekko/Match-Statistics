@@ -1,4 +1,4 @@
-package afterPlaying;
+package afterPlaying.printers;
 
 import java.util.Set;
 import java.util.TreeSet;
@@ -6,8 +6,10 @@ import java.util.stream.Collectors;
 
 import com.google.common.collect.Multimap;
 
+import afterPlaying.PlayersStats;
 import beforePlaying.Player;
 import playing.Event;
+import playing.PlaceOfPlaying;
 
 public class PlayerStatisticsPrinter {
 	private final PlayersStats playersStats;

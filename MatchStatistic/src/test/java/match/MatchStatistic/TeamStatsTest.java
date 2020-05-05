@@ -13,8 +13,6 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import afterPlaying.HistoryMatchesRepo;
-import afterPlaying.PlaceOfPlaying;
 import afterPlaying.TeamStats;
 import beforePlaying.FutureMatch;
 import beforePlaying.Player;
@@ -23,7 +21,9 @@ import playing.Event;
 import playing.Event.EventSnapshot;
 import playing.EventType;
 import playing.EventsInMatch;
+import playing.HistoryMatchesRepo;
 import playing.MatchPlayedInfo;
+import playing.PlaceOfPlaying;
 
 public class TeamStatsTest {
 

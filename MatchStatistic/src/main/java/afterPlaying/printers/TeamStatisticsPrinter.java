@@ -1,9 +1,11 @@
-package afterPlaying;
+package afterPlaying.printers;
 
 import java.util.List;
 
+import afterPlaying.TeamStats;
 import beforePlaying.Team;
 import playing.Event;
+import playing.PlaceOfPlaying;
 
 public class TeamStatisticsPrinter {
 	private final TeamStats teamStats;

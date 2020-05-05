@@ -12,6 +12,7 @@ import com.google.common.collect.TreeMultimap;
 import beforePlaying.Player;
 import beforePlaying.Team;
 import playing.Event;
+import playing.PlaceOfPlaying;
 import playing.Event.EventSnapshot;
 
 public class TeamStatsByPlayers{

@@ -7,8 +7,10 @@ import java.util.stream.Stream;
 
 import beforePlaying.Team;
 import playing.Event;
+import playing.HistoryMatchesRepo;
 import playing.Event.EventSnapshot;
 import playing.MatchPlayedInfo;
+import playing.PlaceOfPlaying;
 
 public class TeamStats{
 	private final List<MatchPlayedInfo> matches;

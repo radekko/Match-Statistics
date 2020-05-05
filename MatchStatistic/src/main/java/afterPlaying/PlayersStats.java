@@ -8,6 +8,7 @@ import com.google.common.collect.TreeMultimap;
 import beforePlaying.Player;
 import beforePlaying.Teams;
 import playing.Event;
+import playing.PlaceOfPlaying;
 
 public class PlayersStats {
 	private final TeamStatsByPlayers teamStatsByPlayers;

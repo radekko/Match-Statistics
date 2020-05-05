@@ -1,9 +1,8 @@
-package afterPlaying;
+package playing;
 
 import java.util.function.Predicate;
 
 import beforePlaying.Team;
-import playing.MatchPlayedInfo;
 
 @FunctionalInterface
 public interface PlaceOfPlayingMatchPredicate {

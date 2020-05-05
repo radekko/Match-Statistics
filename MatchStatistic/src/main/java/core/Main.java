@@ -2,19 +2,19 @@ package core;
 
 import java.util.List;
 
-import afterPlaying.HistoryMatchesRepo;
-import afterPlaying.PlayerStatisticsPrinter;
-import afterPlaying.PlayerStatisticsWithinTeamsPrinter;
 import afterPlaying.PlayersStats;
-import afterPlaying.TeamStatisticsPrinter;
 import afterPlaying.TeamStats;
 import afterPlaying.TeamStatsByPlayers;
-import afterPlaying.TeamsStatisticsPrinter;
 import afterPlaying.TeamsStats;
+import afterPlaying.printers.PlayerStatisticsPrinter;
+import afterPlaying.printers.PlayerStatisticsWithinTeamsPrinter;
+import afterPlaying.printers.TeamStatisticsPrinter;
+import afterPlaying.printers.TeamsStatisticsPrinter;
 import beforePlaying.Schedule;
 import beforePlaying.Team;
 import beforePlaying.TeamRepo;
 import beforePlaying.Teams;
+import playing.HistoryMatchesRepo;
 import playing.MatchPlayedInfo;
 import playing.PlayingMatches;
 
