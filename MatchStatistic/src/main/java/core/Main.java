@@ -1,7 +1,5 @@
 package core;
 
-import java.util.List;
-
 import afterPlaying.PlayersStats;
 import afterPlaying.TeamStats;
 import afterPlaying.TeamStatsByPlayers;
@@ -15,7 +13,6 @@ import beforePlaying.Team;
 import beforePlaying.TeamRepo;
 import beforePlaying.Teams;
 import playing.HistoryMatchesRepo;
-import playing.MatchPlayedInfo;
 import playing.PlayingMatches;
 
 public class Main 
@@ -25,34 +22,29 @@ public class Main
 		//CREATE TEAMS FOR LIGUE
 		Teams allTeams = new Teams(new TeamRepo());
 		
-		//PREPARE MATCHES WHICH WILL BE PLAY
-    	PlayingMatches drawingMatches = new PlayingMatches(new Schedule(allTeams));
-    	
-    	//PLAY MATCHES
-    	List<MatchPlayedInfo> matchesPlayed = drawingMatches.playAll();
-
-    	//STORE PLAYED MATCHES
-    	HistoryMatchesRepo historyMatchesRepo = new HistoryMatchesRepo();
-		historyMatchesRepo.storeAllMatchesInHistory(matchesPlayed);
+		//PREPARE SCHEDULE FOR CHOSEN TEAMS
+		Schedule schedule = new Schedule(allTeams);
+		
+		//PLAY MATCHES FROM SCHEDULE
+    	PlayingMatches playingMatches = new PlayingMatches(schedule, new HistoryMatchesRepo());
     	
     	//PRINT INFO ABOUT LIGUE AND PLAYED MATCHES DETAILS
-		printHeader(1, "AFTER PLAYING");
-		System.out.println("Played ligue lines: " + drawingMatches.getTotalLines() + "\n");
+    	printHeader(1, "AFTER PLAYING");
+		System.out.println("Played ligue lines: " + schedule.getTotalLines() + "\n");
     	System.out.println("FINAL RESULTATS:"+ "\n");
-    	historyMatchesRepo.printPlayedMatchesGroupingByLigueLine();
+    	playingMatches.printPlayedMatchesGroupingByLigueLine();
     	
     	//PREPARE TO PRINTING TEAM STATISTICS
-    	TeamStats teamStats = new TeamStats(historyMatchesRepo); 
-    	TeamStatisticsPrinter statisticsGenerator = new TeamStatisticsPrinter(teamStats);
+    	TeamStats teamStats = new TeamStats(playingMatches.getAllPlayedMatches()); 
 
     	//PRINT CHOOSEN TEAM STATS
     	printHeader(2, "TEAM STATS");
     	Team inspectedTeam = allTeams.getTeamById(2);
-    	statisticsGenerator.printAllTeamStatistics(inspectedTeam);
+    	printStatsForChosenTeam(teamStats, inspectedTeam);
     	
     	//PRINT ANOTHER TEAM STATS
     	Team inspectedTeam2 = allTeams.getTeamById(3);
-    	statisticsGenerator.printAllTeamStatistics(inspectedTeam2);
+    	printStatsForChosenTeam(teamStats, inspectedTeam2);
     	
     	//PREPARE TO PRINTING PLAYER STATS
     	printHeader(3, "PLAYER STATS WITHIN TEAM");
@@ -74,6 +66,11 @@ public class Main
     	PlayerStatisticsPrinter playerStatisticsPrinter = new PlayerStatisticsPrinter(playersStats);
     	playerStatisticsPrinter.printAll();
     }
+
+	private static void printStatsForChosenTeam(TeamStats teamStats, Team inspectedTeam) {
+    	TeamStatisticsPrinter statisticsGenerator = new TeamStatisticsPrinter(teamStats);
+		statisticsGenerator.printAllTeamStatistics(inspectedTeam);
+	}
 	
 	private static void printHeader(int moduleNumber, String message) {
 		System.out.print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
