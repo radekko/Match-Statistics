@@ -1,4 +1,4 @@
-package match.MatchStatistic;
+package playing;
 
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.hasItems;
