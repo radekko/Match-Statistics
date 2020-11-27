@@ -1,4 +1,4 @@
-package afterPlaying.printers;
+package afterPlaying.teamByPlayers;
 
 import java.util.Set;
 import java.util.TreeSet;
@@ -6,17 +6,16 @@ import java.util.stream.Collectors;
 
 import com.google.common.collect.Multimap;
 
-import afterPlaying.TeamStatsByPlayers;
 import beforePlaying.Player;
 import beforePlaying.Team;
-import playing.Event;
-import playing.PlaceOfPlaying;
 
-public class PlayerStatisticsWithinTeamsPrinter {
-	private final TeamStatsByPlayers playerStats;
+public class TeamByPlayerLeaderBoardPrinter {
+	private final TeamByPlayerLeaderBoard teamByPlayerLeaderBoard;
+	private final String statDesc;
 
-	public PlayerStatisticsWithinTeamsPrinter(TeamStatsByPlayers playerStats) {
-		this.playerStats = playerStats;
+	public TeamByPlayerLeaderBoardPrinter(TeamByPlayerLeaderBoard teamByPlayerLeaderBoard) {
+		this.teamByPlayerLeaderBoard = teamByPlayerLeaderBoard;
+		this.statDesc = teamByPlayerLeaderBoard.statDescription();
 	}
 	
 	public void printAll(Team team) {
@@ -24,37 +23,36 @@ public class PlayerStatisticsWithinTeamsPrinter {
 		System.out.println("Players statistic for " + team);
     	System.out.println("-------------------------------------------------");
     	
-    	System.out.println("Home goals");
+    	System.out.println("Home " + statDesc);
     	System.out.println("*************************");
-    	printPlayersLeaderboard(playerStats.getPlayersStatisticsInChosenTeam(team, PlaceOfPlaying.HOME, Event.isGoal()));
+    	printPlayersLeaderboard(teamByPlayerLeaderBoard.createHomeLeaderBoard(team));
 		System.out.println();
 		
-		System.out.println("Away goals");
+		System.out.println("Away " + statDesc);
 		System.out.println("*************************");
-		printPlayersLeaderboard(playerStats.getPlayersStatisticsInChosenTeam(team, PlaceOfPlaying.AWAY, Event.isGoal()));
+		printPlayersLeaderboard(teamByPlayerLeaderBoard.createAwayLeaderBoard(team));
 		System.out.println();
 		
-		System.out.println("Total goals");
+		System.out.println("Total " + statDesc);
 		System.out.println("*************************");
-		printPlayersLeaderboard(playerStats.getPlayersStatisticsInChosenTeam(team, PlaceOfPlaying.HOME_OR_AWAY, Event.isGoal()));
+		printPlayersLeaderboard(teamByPlayerLeaderBoard.createTotalLeaderBoard(team));
 		System.out.println();
 	}
 
 	private void printPlayersLeaderboard(Multimap<Integer, Player> resultMap) {
-		noGoals(resultMap);
+		noStats(resultMap);
 			
 		Set<Integer> numberOfGoalsDesceding = new TreeSet<>(resultMap.keySet()).descendingSet();
 		for(Integer num : numberOfGoalsDesceding) {
-			System.out.print(num + " goals: ");
+			System.out.print(num + ": ");
 			System.out.println(resultMap.get(num).stream().map(String::valueOf).collect(Collectors.joining(", ")));
 		}
 	}
 
-	private void noGoals(Multimap<Integer, Player> resultMap) {
+	private void noStats(Multimap<Integer, Player> resultMap) {
 		if(resultMap.isEmpty()) {
-			System.out.println("0 goals");
+			System.out.println("0 " + statDesc);
 			return;
 		}
 	}
-
 }

@@ -68,11 +68,11 @@ public class Event {
 	}
 	
 	public static Predicate<Event> isForPlayer(Player player) {
-	    return e ->  e.getPlayer() == player;
+	    return e ->  e.getPlayer().equals(player);
 	}
 	
 	public static Predicate<Event> isForTeam(Team team) {
-	    return e ->  e.getTeam() == team;
+	    return e ->  e.getTeam().equals(team);
 	}
 	
 	@Override
@@ -156,6 +156,5 @@ public class Event {
 		public String toString() {
 			return player + " - minute: " + minute;
 		}
-		
 	}
 }

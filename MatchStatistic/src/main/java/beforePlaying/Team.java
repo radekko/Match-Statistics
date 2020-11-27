@@ -1,6 +1,7 @@
 package beforePlaying;
 
 import java.util.List;
+import java.util.Objects;
 
 
 public class Team implements Comparable<Team> {
@@ -41,4 +42,19 @@ public class Team implements Comparable<Team> {
 	public int compareTo(Team o) {
 		return Long.compare(id, o.id);
 	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		Team other = (Team) obj;
+		if (id != other.id)
+			return false;
+		
+		return true;
+	}
+	
 }

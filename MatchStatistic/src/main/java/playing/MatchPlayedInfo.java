@@ -26,17 +26,17 @@ public class MatchPlayedInfo {
 	}
 	
 	public boolean isHost(Team team){
-		return  team == homeTeam ? true : false; 
+		return team.equals(homeTeam) ? true : false; 
 	}
 	
 	public boolean isAway(Team team){
-		return  team == awayTeam ? true : false; 
+		return team.equals(awayTeam) ? true : false; 
 	}
 	
 	public boolean isHomeOrAway(Team team){
-		return  
-				team == homeTeam ? true : false ||
-				team == awayTeam ? true : false; 
+		return
+				team.equals(homeTeam) ? true : false ||
+				team.equals(awayTeam) ? true : false; 
 	}
 	
 	public Stream<Team> getTeams(){
@@ -52,15 +52,20 @@ public class MatchPlayedInfo {
 	}
 	
 	public Stream<EventSnapshot> findEventsForTeam(Predicate<Event> predEventType, Team team){
+		
 		return events.stream()
 				   .filter(predEventType.and(Event.isForTeam(team)))
 				   .map(Event::prepareSnapshot);
 	}
 	
-	public Stream<EventSnapshot> findEvents(Predicate<Event> predEventType){
+	public Stream<Event> getHomeEvents(){
 		return events.stream()
-				   .filter(predEventType)
-				   .map(Event::prepareSnapshot);
+				   .filter(Event.isForTeam(homeTeam));
+	}
+	
+	public Stream<Event> getAwayEvents(){
+		return events.stream()
+				   .filter(Event.isForTeam(awayTeam));
 	}
 	
 	@Override
