@@ -1,12 +1,16 @@
 package core;
 
+import afterPlaying.againtTeamTotal.OpponentGoalsFinder;
 import afterPlaying.bestPlayers.PlayersLeaderBoard;
 import afterPlaying.bestPlayers.PlayersLeaderBoardPrinter;
 import afterPlaying.bestTeams.TeamsLeaderBoard;
 import afterPlaying.bestTeams.TeamsLeaderBoardPrinter;
 import afterPlaying.findEventsByTeam.EventByTypeFinder;
 import afterPlaying.findEventsByTeam.GoalsFinder;
-import afterPlaying.findEventsByTeam.YellowCardsFinder;
+import afterPlaying.findMatchesInfoByLocation.HomeOrAwayMatchesFinder;
+import afterPlaying.resultatFilter.TeamResults;
+import afterPlaying.table.LigueTable;
+import afterPlaying.table.LigueTablePrinter;
 import afterPlaying.teamByPlayers.TeamByPlayerLeaderBoard;
 import afterPlaying.teamByPlayers.TeamByPlayerLeaderBoardPrinter;
 import afterPlaying.teamTotal.TeamTotalStatisticsPrinterNew;
@@ -43,7 +47,19 @@ public class Main {
 //		Team selectedTeam3 = allTeams.getTeamById(3);
 //		Team selectedTeam4 = allTeams.getTeamById(4);
 		
+		printHeader(2, "LIGUE TABLE");
+		TeamResults teamResults = new TeamResults(new HomeOrAwayMatchesFinder(allPlayedMatches.getAllHistory()));
+		LigueTable ligueTable = new LigueTable(
+				allTeams.getAll(), 
+				teamResults,
+				new GoalsFinder(allPlayedMatches),
+				new OpponentGoalsFinder(allPlayedMatches));
+		LigueTablePrinter ligueTablePrinter = new LigueTablePrinter(ligueTable);
+		ligueTablePrinter.print();
+		System.out.println();
+		
 		// PRINT TOTAL GOALS AND TOTAL YELLOW CARDS FOR CHOSEN TEAM
+		printHeader(3, "TEAM TOTAL");
 		printSingleTotal(new GoalsFinder(allPlayedMatches), selectedTeam);
 //		printSingleTotal(new GoalsFinder(allPlayedMatches), selectedTeam2);
 //		printSingleTotal(new GoalsFinder(allPlayedMatches), selectedTeam3);
@@ -51,15 +67,19 @@ public class Main {
 //		printSingleTotal(new YellowCardsFinders(allPlayedMatches), selectedTeam);
 		
 		// PRINT TEAMS LEADERBOARDS
+		printHeader(4, "TEAMS LEADERBOARD");
 		printTeamsLeaderBoard(new GoalsFinder(allPlayedMatches), allTeams);
 //		printTeamsLeaderBoard(new YellowCardsFinders(allPlayedMatches), allTeams);
 		
 		// PRINT TEAM BY PLAYER LEADERBOARDS
+		printHeader(5, "PLAYERS IN TEAM LEADERBOARD");
 		printTeamByPlayerLeaderBoard(new GoalsFinder(allPlayedMatches), selectedTeam);
 //		printTeamByPlayerLeaderBoard(new YellowCardsFinders(allPlayedMatches), selectedTeam);
 		
 		// PRINT PLAYERS LEADERBOARDS
+		printHeader(6, "PLAYERS LEADERBOARD");
 		printPayersLeaderBoard(new GoalsFinder(allPlayedMatches),allTeams);
+		System.out.println();
 //		printPayersLeaderBoard(new YellowCardsFinders(allPlayedMatches),allTeams);
 	}
 

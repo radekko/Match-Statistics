@@ -6,8 +6,8 @@ import beforePlaying.Team;
 import playing.Event.EventSnapshot;
 
 public interface EventByTypeFinder {
-	public List<EventSnapshot> getHomeStat(Team team);
-	public List<EventSnapshot> getAwayStat(Team team);
-	public List<EventSnapshot> getHomeAndAwayStat(Team team);
-	public String statDescription();
+	List<EventSnapshot> getHomeStat(Team team);
+	List<EventSnapshot> getAwayStat(Team team);
+	List<EventSnapshot> getHomeAndAwayStat(Team team);
+	String statDescription();
 }
