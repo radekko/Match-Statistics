@@ -1,43 +1,30 @@
 package afterPlaying.bestPlayers;
 
 import java.util.List;
-import java.util.function.Function;
 
 import com.google.common.collect.Multimap;
 import com.google.common.collect.TreeMultimap;
 
-import afterPlaying.teamByPlayers.TeamByPlayerLeaderBoard;
-import beforePlaying.Player;
-import beforePlaying.Team;
+import afterPlaying.teamStatsByPlayers.TeamByPlayerLeaderBoard;
+import beforePlaying.core.model.Player;
+import beforePlaying.core.model.Team;
+import playing.core.model.MatchPlayedInfo;
 
 public class PlayersLeaderBoard {
 	private final TeamByPlayerLeaderBoard teamByPlayerLeaderBoard;
-	private final List<Team> allTeams;
 
-	public PlayersLeaderBoard(TeamByPlayerLeaderBoard teamByPlayerLeaderBoard, List<Team> allTeams) {
+	public PlayersLeaderBoard(TeamByPlayerLeaderBoard teamByPlayerLeaderBoard) {
 		this.teamByPlayerLeaderBoard = teamByPlayerLeaderBoard;
-		this.allTeams = allTeams;
 	}
 
-	public Multimap<Integer, Player> createHomeLeaderBoard() {
-		return createLeaderBoard(teamByPlayerLeaderBoard::createHomeLeaderBoard);
-	}
-	
-	public Multimap<Integer, Player> createAwayLeaderBoard() {
-		return createLeaderBoard(teamByPlayerLeaderBoard::createAwayLeaderBoard);
-	}
-	
-	public Multimap<Integer, Player> createTotalLeaderBoard() {
-		return createLeaderBoard(teamByPlayerLeaderBoard::createTotalLeaderBoard);
-	}
-	
-	private Multimap<Integer, Player> createLeaderBoard(Function<Team, Multimap<Integer, Player>> funExtractingTeamLeaderBoard) {
+	public Multimap<Integer, Player> createLeaderBoard(List<MatchPlayedInfo> matches, List<Team> teams){
 		Multimap<Integer, Player> leaderboardSum = TreeMultimap.create();
-		allTeams.stream().forEach(team -> leaderboardSum.putAll(funExtractingTeamLeaderBoard.apply(team)));
+		teams.stream().forEach(team -> leaderboardSum.putAll(createLeaderBoardForTeam(matches, team)));
 		return leaderboardSum;
 	}
 
-	public String statDescription() {
-		return teamByPlayerLeaderBoard.statDescription();
+	private Multimap<Integer, Player> createLeaderBoardForTeam(List<MatchPlayedInfo> matches, Team t) {
+		return teamByPlayerLeaderBoard.createLeaderBoard(matches, t);
 	}
+	
 }

@@ -9,11 +9,11 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import beforePlaying.Player;
-import beforePlaying.Team;
-import playing.Event;
-import playing.EventType;
-import playing.EventsInMatch;
+import beforePlaying.core.model.Player;
+import beforePlaying.core.model.Team;
+import playing.core.model.Event;
+import playing.core.model.EventType;
+import playing.core.model.EventsInMatch;
 
 public class EventInMatchTest {
 	private static Player player;

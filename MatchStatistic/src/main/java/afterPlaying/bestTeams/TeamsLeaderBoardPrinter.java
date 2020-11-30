@@ -1,42 +1,32 @@
 package afterPlaying.bestTeams;
 
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import com.google.common.collect.Multimap;
 
-import beforePlaying.Team;
+import beforePlaying.core.model.Team;
+import playing.core.model.MatchPlayedInfo;
 
 public class TeamsLeaderBoardPrinter {
 	private final TeamsLeaderBoard teamsLeaderBoard;
-
-	public TeamsLeaderBoardPrinter(TeamsLeaderBoard teamsLeaderBoard) {
-		this.teamsLeaderBoard = teamsLeaderBoard;
-	}
+	private final String desc;
 	
-	public void printAll() {
-		printTotal();
-		printHomeHome();
-		printAway();
+	public TeamsLeaderBoardPrinter(TeamsLeaderBoard teamsLeaderBoard, String desc) {
+		this.teamsLeaderBoard = teamsLeaderBoard;
+		this.desc = desc;
+	}
+
+	public void printAll(List<Team> teams, List<MatchPlayedInfo> matches) {
+		printLeaderboard(teamsLeaderBoard.createTotalLeaderBoard(teams, matches));
 		System.out.println();
 	}
-
-	private void printTotal() {
-		printLeaderboard(teamsLeaderBoard.createTotalLeaderBoard(),"total ");
-	}
 	
-	private void printHomeHome() {
-		printLeaderboard(teamsLeaderBoard.createHomeLeaderBoard(),"home ");
-	}
-	
-	private void printAway() {
-		printLeaderboard(teamsLeaderBoard.createAwayLeaderBoard(),"away ");
-	}
-	
-	private void printLeaderboard(Multimap<Integer, Team> leaderboard, String desc) {
+	private void printLeaderboard(Multimap<Integer, Team> leaderboard) {
 		System.out.println("-------------------------------------------------");
-		System.out.println("Best teams by " + desc + teamsLeaderBoard.statsDescription());
+		System.out.println("Best teams by " + desc);
 		System.out.println("-------------------------------------------------");
 		
 		Set<Integer> numberOfGoalsDesceding = new TreeSet<>(leaderboard.keySet()).descendingSet();

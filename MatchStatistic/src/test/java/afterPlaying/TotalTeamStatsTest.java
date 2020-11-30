@@ -5,10 +5,10 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import afterPlaying.findEventsByTeam.EventByTypeFinder;
-import afterPlaying.findEventsByTeam.GoalsFinder;
-import afterPlaying.findEventsByTeam.YellowCardsFinder;
-import afterPlaying.teamTotal.TotalTeamStats;
+import afterPlaying.teamStatsTotal.DetailStats;
+import afterPlaying.teamStatsTotal.TeamDetailStatsStatsFactory;
+import afterPlaying.teamStatsTotal.TeamDetailStatsStatsFactory.EventType;
+import afterPlaying.teamStatsTotal.TeamDetailStatsStatsFactory.Localization;
 import repos.MockedRepos;
 
 public class TotalTeamStatsTest extends MockedRepos{
@@ -16,42 +16,58 @@ public class TotalTeamStatsTest extends MockedRepos{
 	// 2) team2 vs team: 1-2, yellow cards:2-0
 	
 	@Test
-	public void goalsForTeam() throws Exception {
-		EventByTypeFinder eventByTypeFinder = new GoalsFinder(historyMatchesRepo);
-		TotalTeamStats totalTeamStats = new TotalTeamStats(eventByTypeFinder);
-		
-		assertEquals(totalTeamStats.getHomeStat(team), 3);
-		assertEquals(totalTeamStats.getAwayStat(team), 2);
-		assertEquals(totalTeamStats.getHomeAndAwayStat(team), 5);
+	public void homeGoals() throws Exception {
+		DetailStats stats = TeamDetailStatsStatsFactory.getInstance(EventType.GOALS, Localization.HOME);
+		assertEquals(stats.getTotalStat(historyMatchesRepo.getAllHistory(), team), 3);
+		assertEquals(stats.getTotalStat(historyMatchesRepo.getAllHistory(), team2), 1);
 	}
 	
 	@Test
-	public void goalsForTeam2() throws Exception {
-		EventByTypeFinder eventByTypeFinder = new GoalsFinder(historyMatchesRepo);
-		TotalTeamStats totalTeamStats = new TotalTeamStats(eventByTypeFinder);
-		
-		assertEquals(totalTeamStats.getHomeStat(team2), 1);
-		assertEquals(totalTeamStats.getAwayStat(team2), 1);
-		assertEquals(totalTeamStats.getHomeAndAwayStat(team2), 2);
+	public void awayGoals() throws Exception {
+		DetailStats stats = TeamDetailStatsStatsFactory.getInstance(EventType.GOALS, Localization.AWAY);
+		assertEquals(stats.getTotalStat(historyMatchesRepo.getAllHistory(), team), 2);
+		assertEquals(stats.getTotalStat(historyMatchesRepo.getAllHistory(), team2), 1);
 	}
 	
 	@Test
-	public void yellowCardsForTeam() throws Exception {
-		EventByTypeFinder eventByTypeFinder = new YellowCardsFinder(historyMatchesRepo);
-		TotalTeamStats totalTeamStats = new TotalTeamStats(eventByTypeFinder);
-		
-		assertEquals(totalTeamStats.getHomeStat(team), 0);
-		assertEquals(totalTeamStats.getAwayStat(team), 0);
-		assertEquals(totalTeamStats.getHomeAndAwayStat(team), 0);
+	public void totalGoals() throws Exception {
+		DetailStats stats = TeamDetailStatsStatsFactory.getInstance(EventType.GOALS, Localization.BOTH);
+		assertEquals(stats.getTotalStat(historyMatchesRepo.getAllHistory(), team), 5);
+		assertEquals(stats.getTotalStat(historyMatchesRepo.getAllHistory(), team2), 2);
 	}
 	
 	@Test
-	public void yellowCardsForTeam2() throws Exception {
-		EventByTypeFinder eventByTypeFinder = new YellowCardsFinder(historyMatchesRepo);
-		TotalTeamStats totalTeamStats = new TotalTeamStats(eventByTypeFinder);
-		
-		assertEquals(totalTeamStats.getHomeStat(team2), 2);
-		assertEquals(totalTeamStats.getAwayStat(team2), 1);
-		assertEquals(totalTeamStats.getHomeAndAwayStat(team2), 3);
+	public void homeYellowCards() throws Exception {
+		DetailStats stats = TeamDetailStatsStatsFactory.getInstance(EventType.YELLOW_CARDS, Localization.HOME);
+		assertEquals(stats.getTotalStat(historyMatchesRepo.getAllHistory(), team), 0);
+		assertEquals(stats.getTotalStat(historyMatchesRepo.getAllHistory(), team2), 2);
+	}
+	
+	@Test
+	public void awayYellowCards() throws Exception {
+		DetailStats stats = TeamDetailStatsStatsFactory.getInstance(EventType.YELLOW_CARDS, Localization.AWAY);
+		assertEquals(stats.getTotalStat(historyMatchesRepo.getAllHistory(), team), 0);
+		assertEquals(stats.getTotalStat(historyMatchesRepo.getAllHistory(), team2), 1);
+	}
+	
+	@Test
+	public void vsHomeGoals() throws Exception {
+		DetailStats stats = TeamDetailStatsStatsFactory.getInstance(EventType.GOALS, Localization.VS_HOME);
+		assertEquals(stats.getTotalStat(historyMatchesRepo.getAllHistory(), team), 1);
+		assertEquals(stats.getTotalStat(historyMatchesRepo.getAllHistory(), team2), 2);
+	}
+	
+	@Test
+	public void vsAwayGoals() throws Exception {
+		DetailStats stats = TeamDetailStatsStatsFactory.getInstance(EventType.GOALS, Localization.VS_AWAY);
+		assertEquals(stats.getTotalStat(historyMatchesRepo.getAllHistory(), team), 1);
+		assertEquals(stats.getTotalStat(historyMatchesRepo.getAllHistory(), team2), 3);
+	}
+	
+	@Test
+	public void vsTotalGoals() throws Exception {
+		DetailStats stats = TeamDetailStatsStatsFactory.getInstance(EventType.GOALS, Localization.VS_BOTH);
+		assertEquals(stats.getTotalStat(historyMatchesRepo.getAllHistory(), team), 2);
+		assertEquals(stats.getTotalStat(historyMatchesRepo.getAllHistory(), team2), 5);
 	}
 }

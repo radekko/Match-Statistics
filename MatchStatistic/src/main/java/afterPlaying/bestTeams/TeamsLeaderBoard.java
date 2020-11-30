@@ -1,42 +1,24 @@
 package afterPlaying.bestTeams;
 
 import java.util.List;
-import java.util.function.Function;
 
 import com.google.common.collect.Multimap;
 import com.google.common.collect.TreeMultimap;
 
-import afterPlaying.teamTotal.TotalTeamStats;
-import beforePlaying.Team;
+import afterPlaying.teamStatsTotal.DetailStats;
+import beforePlaying.core.model.Team;
+import playing.core.model.MatchPlayedInfo;
 
 public class TeamsLeaderBoard {
-	private final TotalTeamStats totalTeamStats;
-	private final List<Team> teams;
+	private final DetailStats stats;
 
-	public TeamsLeaderBoard(TotalTeamStats totalTeamStats, List<Team> teams) {
-		this.totalTeamStats = totalTeamStats;
-		this.teams = teams;
+	public TeamsLeaderBoard(DetailStats stats) {
+		this.stats = stats;
 	}
 	
-	public Multimap<Integer, Team> createTotalLeaderBoard(){
-		return createLeaderBoard(totalTeamStats :: getHomeAndAwayStat);
-	}
-	
-	public Multimap<Integer, Team> createHomeLeaderBoard(){
-		return createLeaderBoard(totalTeamStats :: getHomeStat);
-	}
-	
-	public Multimap<Integer, Team> createAwayLeaderBoard(){
-		return createLeaderBoard(totalTeamStats :: getAwayStat);
-	}
-
-	private Multimap<Integer, Team> createLeaderBoard(Function<Team, Integer> findTotal) {
+	public Multimap<Integer, Team> createTotalLeaderBoard(List<Team> teams, List<MatchPlayedInfo> matches){
 		Multimap<Integer, Team> leaderBoard = TreeMultimap.create();
-		teams.stream().forEach(team -> leaderBoard.put(findTotal.apply(team), team));
+		teams.stream().forEach(team -> leaderBoard.put(stats.getTotalStat(matches, team),team));
 		return leaderBoard;
-	}
-	
-	public String statsDescription() {
-		return totalTeamStats.statsDescription();
 	}
 }

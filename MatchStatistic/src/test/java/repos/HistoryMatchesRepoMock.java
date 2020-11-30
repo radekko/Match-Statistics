@@ -3,29 +3,29 @@ package repos;
 import java.util.ArrayList;
 import java.util.List;
 
-import beforePlaying.FutureMatch;
-import beforePlaying.Player;
-import beforePlaying.Team;
-import playing.Event;
-import playing.EventType;
-import playing.EventsInMatch;
-import playing.HistoryMatchesRepo;
-import playing.MatchPlayedInfo;
+import beforePlaying.core.model.FutureMatch;
+import beforePlaying.core.model.Player;
+import beforePlaying.core.model.Team;
+import playing.core.model.Event;
+import playing.core.model.EventType;
+import playing.core.model.EventsInMatch;
+import playing.core.model.MatchPlayedInfo;
+import playing.infrastructure.HistoryMatchesDatabase;
 
 public class HistoryMatchesRepoMock {
 	
-	private static HistoryMatchesRepo historyMatchesRepo;
+	private static HistoryMatchesDatabase historyMatchesRepo;
 	private static TeamRepoMock teamRepo;
 	
 	private HistoryMatchesRepoMock() {
 	}
 	
-	public static HistoryMatchesRepo getIntance() {
+	public static HistoryMatchesDatabase getIntance() {
 		if(historyMatchesRepo != null)
 			return historyMatchesRepo;
 		
 		teamRepo = TeamRepoMock.getInstance();
-		HistoryMatchesRepo historyMatchesRepo = new HistoryMatchesRepo();
+		HistoryMatchesDatabase historyMatchesRepo = new HistoryMatchesDatabase();
 		historyMatchesRepo.storeAllMatchesInHistory(
 				prepareMatches(
 						teamRepo.getAllTeams().get(0),

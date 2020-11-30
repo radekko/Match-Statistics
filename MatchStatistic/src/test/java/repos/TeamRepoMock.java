@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import beforePlaying.Player;
-import beforePlaying.Team;
+import beforePlaying.core.model.Player;
+import beforePlaying.core.model.Team;
+import beforePlaying.infrastructure.TeamDatabase;
 
-public class TeamRepoMock {
+public class TeamRepoMock extends TeamDatabase{
 	private static TeamRepoMock teamRepoMock;
 	private List<Team> teams = new ArrayList<>();
 	
@@ -18,6 +19,7 @@ public class TeamRepoMock {
 		return new TeamRepoMock();
 	}
 
+	@Override
 	public List<Team> getAllTeams() {
 		return teams;
 	}

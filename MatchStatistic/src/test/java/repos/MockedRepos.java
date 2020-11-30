@@ -2,13 +2,14 @@ package repos;
 
 import org.junit.Before;
 
-import beforePlaying.Player;
-import beforePlaying.Team;
-import playing.HistoryMatchesRepo;
+import beforePlaying.core.model.Player;
+import beforePlaying.core.model.Team;
+import beforePlaying.infrastructure.TeamDatabase;
+import playing.infrastructure.HistoryMatchesDatabase;
 
 public abstract class MockedRepos {
-	protected HistoryMatchesRepo historyMatchesRepo;
-	protected TeamRepoMock teamRepo;
+	protected HistoryMatchesDatabase historyMatchesRepo;
+	protected TeamDatabase teamRepo;
 	protected Team team;
 	protected Team team2;
 	protected Player p; 
