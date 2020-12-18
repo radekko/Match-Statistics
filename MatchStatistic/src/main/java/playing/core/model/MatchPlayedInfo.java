@@ -27,16 +27,6 @@ public class MatchPlayedInfo {
 		this.result = computeResult();
 	}
 	
-	private MatchResult computeResult() {
-		long homeGoals = findEventsForHomeTeam(Event.isGoal()).count();
-		long awayGoals = findEventsForAwayTeam(Event.isGoal()).count();
-		
-		if(homeGoals == awayGoals)
-			return MatchResult.DRAW;
-		
-		return homeGoals > awayGoals ?  MatchResult.HOME_WIN : MatchResult.AWAY_WIN;
-	}
-	
 	public TeamResult homeTeamResult() {
 		return checkTeamResult(homeTeam);
 	}
@@ -94,10 +84,6 @@ public class MatchPlayedInfo {
 	public int getCrowd() {
 		return crowd;
 	}
-	
-	public MatchResult getResult() {
-		return result;
-	}
 
 	public Stream<EventSnapshot> findEventsForHomeTeam(Predicate<Event> predEventType){
 		return events.stream()
@@ -109,6 +95,16 @@ public class MatchPlayedInfo {
 		return events.stream()
 				   .filter(predEventType.and(Event.isForTeam(awayTeam)))
 				   .map(Event::prepareSnapshot);
+	}
+	
+	private MatchResult computeResult() {
+		long homeGoals = findEventsForHomeTeam(Event.isGoal()).count();
+		long awayGoals = findEventsForAwayTeam(Event.isGoal()).count();
+		
+		if(homeGoals == awayGoals)
+			return MatchResult.DRAW;
+		
+		return homeGoals > awayGoals ?  MatchResult.HOME_WIN : MatchResult.AWAY_WIN;
 	}
 
 	@Override

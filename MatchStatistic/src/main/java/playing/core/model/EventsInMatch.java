@@ -10,14 +10,15 @@ public class EventsInMatch {
 	private List<Event> events = new ArrayList<>();
 
 	public void addNextEvent(Event e) {
-		//not next
-		if(e.getMinute() < getMinuteOfLastEvent())
+		if(eventIsFormerThanLastlyAddedEvent(e))
 			return;
 		
 		Player p = e.getPlayer();
 		Team t = e.getTeam();
 		
-		if(getYellowCards(p) < 2 && getRedCards(p) == 0 && getRedCards(t) < 7)
+		if(ifOnlyZeroOrOneYellowCardForPlayerBefore(p) 
+				&& ifNotRedCardForPlayerBefore(p) 
+				&& ifLessThan7RedCardsForTeam(t))
 			events.add(e);
 	}
 	
@@ -25,6 +26,22 @@ public class EventsInMatch {
 		return new ArrayList<Event>(events);
 	}
 
+	private boolean eventIsFormerThanLastlyAddedEvent(Event e) {
+		return e.getMinute() < getMinuteOfLastEvent();
+	}
+
+	private boolean ifLessThan7RedCardsForTeam(Team t) {
+		return getRedCards(t) < 7;
+	}
+
+	private boolean ifNotRedCardForPlayerBefore(Player p) {
+		return getRedCards(p) == 0;
+	}
+
+	private boolean ifOnlyZeroOrOneYellowCardForPlayerBefore(Player p) {
+		return getYellowCards(p) < 2;
+	}
+	
 	private int getYellowCards(Player player) {
 		return (int)events.stream()
 			   .filter(Event.isYellowCard().and(Event.isForPlayer(player)))
