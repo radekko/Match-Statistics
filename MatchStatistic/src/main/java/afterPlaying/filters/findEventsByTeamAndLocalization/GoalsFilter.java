@@ -1,23 +1,17 @@
 package afterPlaying.filters.findEventsByTeamAndLocalization;
 
-import java.util.List;
-import java.util.stream.Stream;
+import java.util.function.Predicate;
 
 import afterPlaying.filters.findEventsByLocalization.EventLocalizationFilter;
-import beforePlaying.core.model.Team;
 import playing.core.model.Event;
-import playing.core.model.MatchPlayedInfo;
-import playing.core.model.Event.EventSnapshot;
 
-public class GoalsFilter implements EventTypeFilter{
-	private final EventLocalizationFilter matchesEventByLocalizationFinder;
-	
+public class GoalsFilter extends AbstractEventTypeFilter{
 	public GoalsFilter(EventLocalizationFilter matchesEventByLocalizationFinder) {
-		this.matchesEventByLocalizationFinder = matchesEventByLocalizationFinder;
+		super(matchesEventByLocalizationFinder);
 	}
-	
+
 	@Override
-	public Stream<EventSnapshot> getStats(List<MatchPlayedInfo> matches,Team team){
-		return matchesEventByLocalizationFinder.getMatchesInChosenLocalization(matches, team, Event.isGoal());
+	protected Predicate<Event> eventType() {
+		return Event.isGoal();
 	}
 }
