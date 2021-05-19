@@ -1,4 +1,4 @@
-package afterPlaying.filters.findEventsByLocalisation;
+package afterPlaying.filters.findEventsByLocalization;
 
 import java.util.List;
 import java.util.function.Predicate;
@@ -10,12 +10,10 @@ import playing.core.model.Event;
 import playing.core.model.MatchPlayedInfo;
 import playing.core.model.Event.EventSnapshot;
 
-public class TeamAwayMatchesEventFilter implements EventLocalizationFilter{
-
+public class VsTeamAwayMatchesEventFilter implements EventLocalizationFilter{
 	@Override
-	public Stream<EventSnapshot> getMatchesEventInChosenLocalization(List<MatchPlayedInfo> matches, Team team, Predicate<Event> eventType) {
+	public Stream<EventSnapshot> getMatchesInChosenLocalization(List<MatchPlayedInfo> matches, Team team, Predicate<Event> eventType) {
 		return new AwayMatchesFilter().getMatchesInChosenLocalization(matches, team)
-				.flatMap(m -> m.findEventsForAwayTeam(eventType));
+				.flatMap(m -> m.findEventsForHomeTeam(eventType));
 	}
-	
 }

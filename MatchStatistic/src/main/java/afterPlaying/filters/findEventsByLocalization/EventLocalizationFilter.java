@@ -1,4 +1,4 @@
-package afterPlaying.filters.findEventsByLocalisation;
+package afterPlaying.filters.findEventsByLocalization;
 
 import java.util.List;
 import java.util.function.Predicate;
@@ -10,5 +10,5 @@ import playing.core.model.MatchPlayedInfo;
 import playing.core.model.Event.EventSnapshot;
 
 public interface EventLocalizationFilter {
-	Stream<EventSnapshot> getMatchesEventInChosenLocalization(List<MatchPlayedInfo> matches, Team team,Predicate<Event> eventType);
+	Stream<EventSnapshot> getMatchesInChosenLocalization(List<MatchPlayedInfo> matches, Team team,Predicate<Event> eventType);
 }

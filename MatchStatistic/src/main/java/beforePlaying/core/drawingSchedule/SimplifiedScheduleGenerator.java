@@ -81,7 +81,7 @@ public class SimplifiedScheduleGenerator implements ScheduleGenerator {
 	private static List<Pair> createOneLigueLine(int matchesInSingleLine, List<Pair> allPairs) {
 		List<Pair> copyOfPairs = new ArrayList<>(allPairs);
 		List<Pair> currentLigueLine = new ArrayList<>();
-		
+
 		while(copyOfPairs.size() > 0) {
 			Pair drawedPair = getRandomPair(copyOfPairs);
 			currentLigueLine.add(drawedPair);

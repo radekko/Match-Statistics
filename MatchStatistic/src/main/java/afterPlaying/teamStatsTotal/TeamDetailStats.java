@@ -3,7 +3,7 @@ package afterPlaying.teamStatsTotal;
 import java.util.List;
 import java.util.stream.Stream;
 
-import afterPlaying.filters.findEventsByTeam.EventTypeFilter;
+import afterPlaying.filters.findEventsByTeamAndLocalization.EventTypeFilter;
 import beforePlaying.core.model.Team;
 import playing.core.model.MatchPlayedInfo;
 import playing.core.model.Event.EventSnapshot;

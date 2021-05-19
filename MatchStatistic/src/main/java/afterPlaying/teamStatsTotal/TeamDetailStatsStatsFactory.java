@@ -1,14 +1,14 @@
 package afterPlaying.teamStatsTotal;
 
-import afterPlaying.filters.findEventsByLocalisation.EventLocalizationFilter;
-import afterPlaying.filters.findEventsByLocalisation.TeamAwayMatchesEventFilter;
-import afterPlaying.filters.findEventsByLocalisation.TeamHomeMatchesEventFilter;
-import afterPlaying.filters.findEventsByLocalisation.TeamHomeOrAwayMatchesFilter;
-import afterPlaying.filters.findEventsByLocalisation.VsTeamAwayMatchesEventFilter;
-import afterPlaying.filters.findEventsByLocalisation.VsTeamHomeMatchesEventFilter;
-import afterPlaying.filters.findEventsByLocalisation.VsTeamHomeOrAwayMatchesFilter;
-import afterPlaying.filters.findEventsByTeam.GoalsFilter;
-import afterPlaying.filters.findEventsByTeam.YellowCardsFilter;
+import afterPlaying.filters.findEventsByLocalization.EventLocalizationFilter;
+import afterPlaying.filters.findEventsByLocalization.TeamAwayMatchesEventFilter;
+import afterPlaying.filters.findEventsByLocalization.TeamHomeMatchesEventFilter;
+import afterPlaying.filters.findEventsByLocalization.TeamHomeOrAwayMatchesFilter;
+import afterPlaying.filters.findEventsByLocalization.VsTeamAwayMatchesEventFilter;
+import afterPlaying.filters.findEventsByLocalization.VsTeamHomeMatchesEventFilter;
+import afterPlaying.filters.findEventsByLocalization.VsTeamHomeOrAwayMatchesFilter;
+import afterPlaying.filters.findEventsByTeamAndLocalization.GoalsFilter;
+import afterPlaying.filters.findEventsByTeamAndLocalization.YellowCardsFilter;
 
 public class TeamDetailStatsStatsFactory {
 

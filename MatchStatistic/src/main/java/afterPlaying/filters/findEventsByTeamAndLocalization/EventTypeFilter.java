@@ -1,4 +1,4 @@
-package afterPlaying.filters.findEventsByTeam;
+package afterPlaying.filters.findEventsByTeamAndLocalization;
 
 import java.util.List;
 import java.util.stream.Stream;
