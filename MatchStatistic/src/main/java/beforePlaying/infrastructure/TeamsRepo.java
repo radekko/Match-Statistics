@@ -13,7 +13,7 @@ public class TeamsRepo{
 	}
 	
 	public Team getTeamById(long id) {
-		return teams.stream().filter(p -> p.getId() == id).findFirst().<RuntimeException>orElseThrow(() -> new RuntimeException("Team not exist"));
+		return teams.stream().filter(p -> p.getId() == id).findFirst().orElseThrow(() -> new RuntimeException("Team not exist"));
 	}
 
 	public List<Team> getAll() {

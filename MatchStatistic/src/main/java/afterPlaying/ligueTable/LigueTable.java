@@ -30,8 +30,8 @@ public class LigueTable {
 	private TeamRecord prepare(Team team){
 		int wins = mainStats.getWins(matches, team);
 		int draws = mainStats.getDraws(matches, team);
-		int homeGoals = teamStats.getTotalStat(matches, team);
-		int awayGoals = vsTeamStats.getTotalStat(matches, team);
+		int homeGoals = teamStats.getTotalStat(team);
+		int awayGoals = vsTeamStats.getTotalStat(team);
 		return new TeamRecord(team, wins, draws, homeGoals, awayGoals);
 	}
 }

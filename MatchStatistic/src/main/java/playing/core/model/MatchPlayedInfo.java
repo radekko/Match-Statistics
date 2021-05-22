@@ -32,10 +32,64 @@ public class MatchPlayedInfo {
 	}
 	
 	public TeamResult awayTeamResult() {
-		return checkTeamResult(homeTeam);
+		return checkTeamResult(awayTeam);
 	}
 	
-	public TeamResult checkTeamResult(Team team) {
+	public boolean isHomeWinner() {
+		return result == MatchResult.HOME_WIN ? true : false;
+	}
+	
+	public boolean isAwayWinner() {
+		return result == MatchResult.AWAY_WIN ? true : false;
+	}
+	
+	public boolean isDraw() {
+		return result == MatchResult.DRAW ? true : false;
+	}
+
+	public static Predicate<MatchPlayedInfo> isTeamAsHomePred(Team team){
+		return m -> m.isTeamAsHome(team);
+	}
+	
+	public static Predicate<MatchPlayedInfo> isTeamAsAwayPred(Team team){
+		return m -> m.isTeamAsAway(team);
+	}
+	
+	public static Predicate<MatchPlayedInfo> isTeamAsHomeOrAwayPred(Team team){
+		return isTeamAsHomePred(team).or(isTeamAsAwayPred(team));
+	}
+	
+	public Stream<Event> getEventsFromMatch(Team team){
+		return events.stream().filter(Event.isForTeam(team));
+	}
+	
+	public Stream<Event> getEventsFromMatchForOpponent(Team team){
+		return events.stream().filter(Event.isForTeam(team).negate());
+	}
+	
+	public int getLigueLine() {
+		return ligueLine;
+	}
+
+	public int getCrowd() {
+		return crowd;
+	}
+	
+	private boolean isTeamAsHome(Team team){
+		return team.equals(homeTeam) ? true : false; 
+	}
+	
+	private boolean isTeamAsAway(Team team){
+		return team.equals(awayTeam) ? true : false; 
+	}
+	
+	private Stream<EventSnapshot> findEventsForTeam(Predicate<Event> predEventType, Team team){
+		return events.stream()
+				   .filter(predEventType.and(Event.isForTeam(team)))
+				   .map(Event::prepareSnapshot);
+	}
+	
+	private TeamResult checkTeamResult(Team team) {
 		if(result == MatchResult.DRAW)
 			return TeamResult.DRAW;
 		
@@ -52,54 +106,9 @@ public class MatchPlayedInfo {
 		return TeamResult.WIN;
 	}
 	
-	public boolean isHomeWinner() {
-		return result == MatchResult.HOME_WIN ? true : false;
-	}
-	
-	public boolean isAwayWinner() {
-		return result == MatchResult.AWAY_WIN ? true : false;
-	}
-	
-	public boolean isDraw() {
-		return result == MatchResult.DRAW ? true : false;
-	}
-
-	public boolean isHost(Team team){
-		return team.equals(homeTeam) ? true : false; 
-	}
-	
-	public boolean isAway(Team team){
-		return team.equals(awayTeam) ? true : false; 
-	}
-	
-	public boolean isHomeOrAway(Team team){
-		return team.equals(homeTeam) ? true : false ||
-				team.equals(awayTeam) ? true : false; 
-	}
-	
-	public int getLigueLine() {
-		return ligueLine;
-	}
-
-	public int getCrowd() {
-		return crowd;
-	}
-
-	public Stream<EventSnapshot> findEventsForHomeTeam(Predicate<Event> predEventType){
-		return events.stream()
-				   .filter(predEventType.and(Event.isForTeam(homeTeam)))
-				   .map(Event::prepareSnapshot);
-	}
-	
-	public Stream<EventSnapshot> findEventsForAwayTeam(Predicate<Event> predEventType){
-		return events.stream()
-				   .filter(predEventType.and(Event.isForTeam(awayTeam)))
-				   .map(Event::prepareSnapshot);
-	}
-	
 	private MatchResult computeResult() {
-		long homeGoals = findEventsForHomeTeam(Event.isGoal()).count();
-		long awayGoals = findEventsForAwayTeam(Event.isGoal()).count();
+		long homeGoals = findEventsForTeam(Event.isGoal(), homeTeam).count();
+		long awayGoals = findEventsForTeam(Event.isGoal(), awayTeam).count();
 		
 		if(homeGoals == awayGoals)
 			return MatchResult.DRAW;

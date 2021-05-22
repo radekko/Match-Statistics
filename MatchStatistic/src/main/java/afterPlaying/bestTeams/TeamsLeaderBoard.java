@@ -7,7 +7,6 @@ import com.google.common.collect.TreeMultimap;
 
 import afterPlaying.teamStatsTotal.DetailStats;
 import beforePlaying.core.model.Team;
-import playing.core.model.MatchPlayedInfo;
 
 public class TeamsLeaderBoard {
 	private final DetailStats stats;
@@ -16,9 +15,9 @@ public class TeamsLeaderBoard {
 		this.stats = stats;
 	}
 	
-	public Multimap<Integer, Team> createTotalLeaderBoard(List<Team> teams, List<MatchPlayedInfo> matches){
+	public Multimap<Integer, Team> createTotalLeaderBoard(List<Team> teams){
 		Multimap<Integer, Team> leaderBoard = TreeMultimap.create();
-		teams.stream().forEach(team -> leaderBoard.put(stats.getTotalStat(matches, team),team));
+		teams.stream().forEach(team -> leaderBoard.put(stats.getTotalStat(team),team));
 		return leaderBoard;
 	}
 }

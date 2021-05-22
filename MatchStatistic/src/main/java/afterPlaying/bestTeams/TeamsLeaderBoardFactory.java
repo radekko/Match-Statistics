@@ -1,8 +1,11 @@
 package afterPlaying.bestTeams;
 
-import afterPlaying.teamStatsTotal.TeamDetailStatsStatsFactory;
-import afterPlaying.teamStatsTotal.TeamDetailStatsStatsFactory.EventType;
-import afterPlaying.teamStatsTotal.TeamDetailStatsStatsFactory.Localization;
+import java.util.List;
+
+import afterPlaying.teamStatsTotal.EventType;
+import afterPlaying.teamStatsTotal.Localization;
+import afterPlaying.teamStatsTotal.TeamDetailStatsFactory;
+import playing.core.model.MatchPlayedInfo;
 
 public class TeamsLeaderBoardFactory {
 	
@@ -10,12 +13,12 @@ public class TeamsLeaderBoardFactory {
 		GOALS_TOTAL, YELLOW_CARDS_TOTAL // Possible GOALS -HOME -AWAY, YELLOW CARDS -HOME -AWAY
 	}
 	
-	public static TeamsLeaderBoard getTeamsLeaderBoard(LeaderBoardType lt) {
-		switch(lt) {
+	public static TeamsLeaderBoard getTeamsLeaderBoard(LeaderBoardType type, List<MatchPlayedInfo> matches) {
+		switch(type) {
 		case GOALS_TOTAL:
-			return new TeamsLeaderBoard(TeamDetailStatsStatsFactory.getInstance(EventType.GOALS, Localization.BOTH));
+			return new TeamsLeaderBoard(TeamDetailStatsFactory.getInstance(EventType.GOALS_GAINED, Localization.BOTH, matches));
 		case YELLOW_CARDS_TOTAL:
-			return new TeamsLeaderBoard(TeamDetailStatsStatsFactory.getInstance(EventType.YELLOW_CARDS, Localization.BOTH));
+			return new TeamsLeaderBoard(TeamDetailStatsFactory.getInstance(EventType.YELLOW_CARDS_GAINED, Localization.BOTH, matches));
 		}
 		return null;
 	}

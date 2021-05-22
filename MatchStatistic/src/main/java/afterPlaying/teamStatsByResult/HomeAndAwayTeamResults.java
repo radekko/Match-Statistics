@@ -5,7 +5,7 @@ import java.util.List;
 import beforePlaying.core.model.Team;
 import playing.core.model.MatchPlayedInfo;
 
-public class HomeAndAwayTeamResults implements MainStats{
+class HomeAndAwayTeamResults implements MainStats{
 	private InHomeTeamResults teamHomeResults;
 	private AwayTeamResults teamAwayResults;
 			

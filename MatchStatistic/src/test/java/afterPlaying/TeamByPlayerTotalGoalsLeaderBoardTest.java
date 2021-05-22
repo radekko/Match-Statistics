@@ -28,7 +28,7 @@ public class TeamByPlayerTotalGoalsLeaderBoardTest extends MockedRepos{
 	@Before
 	public void setUp() {
 		super.setUp();
-		this.teamByPlayerLeaderBoard = TeamByPlayerLeaderBoardFactory.getInstance(TeamByPlayerLeaderBoardType.BOTH_GOALS);
+		this.teamByPlayerLeaderBoard = TeamByPlayerLeaderBoardFactory.getInstance(TeamByPlayerLeaderBoardType.BOTH_GOALS, historyMatchesRepo.getAllHistory());
 	}
 	
 	@Test

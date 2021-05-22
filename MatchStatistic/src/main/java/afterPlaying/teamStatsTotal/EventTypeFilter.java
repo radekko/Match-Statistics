@@ -5,7 +5,6 @@ import java.util.stream.Stream;
 import beforePlaying.core.model.Team;
 import playing.core.model.Event.EventSnapshot;
 
-public interface DetailStats {
-	int getTotalStat(Team team);
-	Stream<EventSnapshot> getEvents(Team team);
+public interface EventTypeFilter {
+	Stream<EventSnapshot> getStats(Team team);
 }

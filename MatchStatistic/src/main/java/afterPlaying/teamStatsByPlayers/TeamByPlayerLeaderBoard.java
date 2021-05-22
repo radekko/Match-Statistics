@@ -25,7 +25,7 @@ public class TeamByPlayerLeaderBoard {
 		Multimap<Integer, Player> teamStatsGroupedByPlayers = TreeMultimap.create();
 		
 		Map<Player, Integer> playersByStats =
-				detailStats.getEvents(matches, team)
+				detailStats.getEvents(team)
 				.collect(Collectors.toMap(
 					EventSnapshot::getPlayer,
 					es -> 1, 

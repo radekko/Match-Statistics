@@ -2,12 +2,11 @@ package afterPlaying.ligueTable;
 
 import java.util.List;
 
-import afterPlaying.teamStatsByResult.AwayTeamResults;
-import afterPlaying.teamStatsByResult.HomeAndAwayTeamResults;
-import afterPlaying.teamStatsByResult.InHomeTeamResults;
-import afterPlaying.teamStatsTotal.TeamDetailStatsStatsFactory;
-import afterPlaying.teamStatsTotal.TeamDetailStatsStatsFactory.EventType;
-import afterPlaying.teamStatsTotal.TeamDetailStatsStatsFactory.Localization;
+import afterPlaying.teamStatsByResult.MainStatsFactory;
+import afterPlaying.teamStatsByResult.MainStatsFactory.MainStatsType;
+import afterPlaying.teamStatsTotal.EventType;
+import afterPlaying.teamStatsTotal.Localization;
+import afterPlaying.teamStatsTotal.TeamDetailStatsFactory;
 import playing.core.model.MatchPlayedInfo;
 
 public class LigueTableFactory {
@@ -15,24 +14,28 @@ public class LigueTableFactory {
 		TOTAL, ONLY_HOME_MATCHES, ONLY_AWAY_MATCHES
 	}
 	
-	public static LigueTable getInstance(LigueTableType t, List<MatchPlayedInfo> matches) {
-		switch(t) {
+	public static LigueTable getInstance(LigueTableType type, List<MatchPlayedInfo> matches) {
+		switch(type) {
 		case TOTAL:
-			return new LigueTable(matches,
-					new HomeAndAwayTeamResults(),
-					TeamDetailStatsStatsFactory.getInstance(EventType.GOALS, Localization.BOTH),
-					TeamDetailStatsStatsFactory.getInstance(EventType.GOALS, Localization.VS_BOTH));
+			return create(matches,
+					MainStatsType.HOME_AND_AWAY_TEAM_RESULTS,
+					Localization.BOTH);
 		case ONLY_HOME_MATCHES:
-			return new LigueTable(matches,
-					new InHomeTeamResults(),
-					TeamDetailStatsStatsFactory.getInstance(EventType.GOALS, Localization.HOME),
-					TeamDetailStatsStatsFactory.getInstance(EventType.GOALS, Localization.VS_HOME));
+			return create(matches,
+					MainStatsType.IN_HOME_TEAM_RESULTS,
+					Localization.HOME);	
 		case ONLY_AWAY_MATCHES:
-			return new LigueTable(matches,
-					new AwayTeamResults(),
-					TeamDetailStatsStatsFactory.getInstance(EventType.GOALS, Localization.AWAY),
-					TeamDetailStatsStatsFactory.getInstance(EventType.GOALS, Localization.VS_AWAY));
+			return create(matches,
+					MainStatsType.AWAY_TEAM_RESULTS,
+					Localization.AWAY);	
 		}
 		return null;
+	}
+	
+	private static LigueTable create(List<MatchPlayedInfo> matches, MainStatsType mainStatsType, Localization loc) {
+		return new LigueTable(matches, 
+							  MainStatsFactory.getMainStatsFactory(mainStatsType),
+							  TeamDetailStatsFactory.getInstance(EventType.GOALS_GAINED, loc, matches),
+							  TeamDetailStatsFactory.getInstance(EventType.GOALS_GAINED.getOpposite(), loc, matches));
 	}
 }

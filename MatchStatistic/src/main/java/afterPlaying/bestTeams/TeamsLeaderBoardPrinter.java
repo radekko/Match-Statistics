@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 import com.google.common.collect.Multimap;
 
 import beforePlaying.core.model.Team;
-import playing.core.model.MatchPlayedInfo;
 
 public class TeamsLeaderBoardPrinter {
 	private final TeamsLeaderBoard teamsLeaderBoard;
@@ -19,8 +18,8 @@ public class TeamsLeaderBoardPrinter {
 		this.desc = desc;
 	}
 
-	public void printAll(List<Team> teams, List<MatchPlayedInfo> matches) {
-		printLeaderboard(teamsLeaderBoard.createTotalLeaderBoard(teams, matches));
+	public void printAll(List<Team> teams) {
+		printLeaderboard(teamsLeaderBoard.createTotalLeaderBoard(teams));
 		System.out.println();
 	}
 	

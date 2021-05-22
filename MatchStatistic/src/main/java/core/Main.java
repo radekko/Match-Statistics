@@ -19,9 +19,9 @@ import afterPlaying.teamStatsByPlayers.TeamByPlayerLeaderBoardFactory;
 import afterPlaying.teamStatsByPlayers.TeamByPlayerLeaderBoardFactory.TeamByPlayerLeaderBoardType;
 import afterPlaying.teamStatsByPlayers.TeamByPlayerLeaderBoardPrinter;
 import afterPlaying.teamStatsTotal.DetailStats;
-import afterPlaying.teamStatsTotal.TeamDetailStatsStatsFactory;
-import afterPlaying.teamStatsTotal.TeamDetailStatsStatsFactory.EventType;
-import afterPlaying.teamStatsTotal.TeamDetailStatsStatsFactory.Localization;
+import afterPlaying.teamStatsTotal.EventType;
+import afterPlaying.teamStatsTotal.Localization;
+import afterPlaying.teamStatsTotal.TeamDetailStatsFactory;
 import afterPlaying.teamStatsTotal.TeamTotalStatisticsPrinter;
 import beforePlaying.core.ISchedule;
 import beforePlaying.core.model.Team;
@@ -63,26 +63,26 @@ public class Main {
 		
 		// PRINT TOTAL GOALS AND TOTAL YELLOW CARDS FOR CHOSEN TEAM
 		printHeader(3, "TEAM TOTAL");
-		DetailStats detailStats = TeamDetailStatsStatsFactory.getInstance(EventType.GOALS, Localization.BOTH);
-		TeamTotalStatisticsPrinter ttsp = new TeamTotalStatisticsPrinter(detailStats, playedMatches, "home and away goals");
+		DetailStats homeAndAwayGoals = TeamDetailStatsFactory.getInstance(EventType.GOALS_GAINED, Localization.BOTH, playedMatches);
+		TeamTotalStatisticsPrinter ttsp = new TeamTotalStatisticsPrinter(homeAndAwayGoals, "home and away goals");
 		ttsp.print(selectedTeam);
 		ttsp.print(selectedTeam2);
 
 		// PRINT TEAMS LEADERBOARDS
 		printHeader(4, "TEAMS LEADERBOARD");
-		TeamsLeaderBoard teamsLeaderBoard = TeamsLeaderBoardFactory.getTeamsLeaderBoard(LeaderBoardType.GOALS_TOTAL);
+		TeamsLeaderBoard teamsLeaderBoard = TeamsLeaderBoardFactory.getTeamsLeaderBoard(LeaderBoardType.GOALS_TOTAL, playedMatches);
 		TeamsLeaderBoardPrinter tlp = new TeamsLeaderBoardPrinter(teamsLeaderBoard, "goals total");
-		tlp.printAll(allTeams.getAll(), playedMatches);
+		tlp.printAll(allTeams.getAll());
 		
 		// PRINT TEAM BY PLAYER LEADERBOARDS
 		printHeader(5, "PLAYERS IN TEAM LEADERBOARD");
-		TeamByPlayerLeaderBoard teamByPlayerLeaderBoard = TeamByPlayerLeaderBoardFactory.getInstance(TeamByPlayerLeaderBoardType.BOTH_GOALS);
+		TeamByPlayerLeaderBoard teamByPlayerLeaderBoard = TeamByPlayerLeaderBoardFactory.getInstance(TeamByPlayerLeaderBoardType.BOTH_GOALS, playedMatches);
 		TeamByPlayerLeaderBoardPrinter tbpl = new TeamByPlayerLeaderBoardPrinter(teamByPlayerLeaderBoard,"total goals");
 		tbpl.printAll(selectedTeam, playedMatches);
 		
 		// PRINT PLAYERS LEADERBOARDS
 		printHeader(6, "PLAYERS LEADERBOARD");
-		PlayersLeaderBoard playersLeaderBoard = PlayersLeaderBoardFactory.getInstance(PlayerLeaderBoardType.PLAYER_BOTH_GOALS);
+		PlayersLeaderBoard playersLeaderBoard = PlayersLeaderBoardFactory.getInstance(PlayerLeaderBoardType.PLAYER_BOTH_GOALS, playedMatches);
 		PlayersLeaderBoardPrinter plp = new PlayersLeaderBoardPrinter(playersLeaderBoard,"total goals");
 		plp.printAll(allTeams.getAll(), playedMatches);
 	}

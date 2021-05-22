@@ -24,8 +24,8 @@ public class TeamsLeaderBoardTest extends MockedRepos{
 	// b) yellow cards: p3:1, p4:1 - 0
 	@Test
 	public void goalsBothLeaderBoard() throws Exception {
-		TeamsLeaderBoard teamsGoalsLeaderBoard = TeamsLeaderBoardFactory.getTeamsLeaderBoard(LeaderBoardType.GOALS_TOTAL);
-		Multimap<Integer, Team> totalGoalsLeaderBoard = teamsGoalsLeaderBoard.createTotalLeaderBoard(teamRepo.getAllTeams(), historyMatchesRepo.getAllHistory());
+		TeamsLeaderBoard teamsGoalsLeaderBoard = TeamsLeaderBoardFactory.getTeamsLeaderBoard(LeaderBoardType.GOALS_TOTAL, historyMatchesRepo.getAllHistory());
+		Multimap<Integer, Team> totalGoalsLeaderBoard = teamsGoalsLeaderBoard.createTotalLeaderBoard(teamRepo.getAllTeams());
 		
 		assertThat(totalGoalsLeaderBoard).hasSize(2);
 	    assertThat(totalGoalsLeaderBoard).containsKeys(2,5);
@@ -34,8 +34,8 @@ public class TeamsLeaderBoardTest extends MockedRepos{
 	
 	@Test
 	public void yellowCardsBothLeaderBoard() throws Exception {
-		TeamsLeaderBoard teamsGoalsLeaderBoard = TeamsLeaderBoardFactory.getTeamsLeaderBoard(LeaderBoardType.YELLOW_CARDS_TOTAL);
-		Multimap<Integer, Team> totalGoalsLeaderBoard = teamsGoalsLeaderBoard.createTotalLeaderBoard(teamRepo.getAllTeams(), historyMatchesRepo.getAllHistory());
+		TeamsLeaderBoard teamsGoalsLeaderBoard = TeamsLeaderBoardFactory.getTeamsLeaderBoard(LeaderBoardType.YELLOW_CARDS_TOTAL, historyMatchesRepo.getAllHistory());
+		Multimap<Integer, Team> totalGoalsLeaderBoard = teamsGoalsLeaderBoard.createTotalLeaderBoard(teamRepo.getAllTeams());
 		
 		assertThat(totalGoalsLeaderBoard).hasSize(2);
 	    assertThat(totalGoalsLeaderBoard).containsKeys(0,3);
