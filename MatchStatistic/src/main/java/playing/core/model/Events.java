@@ -27,7 +27,7 @@ public class Events {
 		return getStream().filter(Event.isForTeam(team));
 	}
 	
-	public Stream<Event> getEventsFromMatchForOpponent(Team team){
+	public Stream<Event> getEventsFromMatchForTheOpponent(Team team){
 		return getStream().filter(Event.isForTeam(team).negate());
 	}
 	
@@ -35,11 +35,6 @@ public class Events {
 		return getStream()
 				   .filter(predEventType.and(Event.isForTeam(team)))
 				   .map(Event::prepareSnapshot);
-	}
-	
-	public Stream<Event> findEventsByType(Predicate<Event> predEventType){
-		return getStream()
-				   .filter(predEventType); 
 	}
 	
 	@Override
