@@ -5,8 +5,8 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-import afterPlaying.teamStatsByResult.MainStatsFactory;
-import afterPlaying.teamStatsByResult.MainStatsFactory.MainStatsType;
+import afterPlaying.teamStatsByResult.infrastructure.MainStatsFactory;
+import afterPlaying.teamStatsByResult.infrastructure.MainStatsFactory.MainStatsType;
 import repos.MockedRepos;
 
 public class InHomeAndAwayTeamResultsTest extends MockedRepos{

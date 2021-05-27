@@ -7,14 +7,14 @@ import com.google.common.collect.Multimap;
 import static org.assertj.guava.api.Assertions.assertThat;
 import static org.assertj.guava.api.Assertions.entry;
 
-import afterPlaying.bestPlayers.PlayersLeaderBoard;
-import afterPlaying.bestPlayers.PlayersLeaderBoardFactory;
-import afterPlaying.bestPlayers.PlayersLeaderBoardFactory.PlayerLeaderBoardType;
+import afterPlaying.bestPlayers.IPlayersLeaderBoard;
+import afterPlaying.bestPlayers.infrastructure.PlayersLeaderBoardFactory;
+import afterPlaying.bestPlayers.infrastructure.PlayersLeaderBoardFactory.PlayerLeaderBoardType;
 import beforePlaying.core.model.Player;
 import repos.MockedRepos;
 
 public class PlayersTotalGoalsLeaderBoardTest extends MockedRepos{
-	private PlayersLeaderBoard playersLeaderBoard;
+	private IPlayersLeaderBoard playersLeaderBoard;
 	// 2 MATCHES
 		// 1) team vs team2 : goals 3-1
 		// a) goals: p:2, p2:1 - p4:1

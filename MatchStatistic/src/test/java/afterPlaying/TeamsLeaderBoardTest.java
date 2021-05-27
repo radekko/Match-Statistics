@@ -7,9 +7,9 @@ import org.junit.Test;
 
 import com.google.common.collect.Multimap;
 
-import afterPlaying.bestTeams.TeamsLeaderBoard;
-import afterPlaying.bestTeams.TeamsLeaderBoardFactory;
-import afterPlaying.bestTeams.TeamsLeaderBoardFactory.LeaderBoardType;
+import afterPlaying.bestTeams.ITeamsLeaderBoard;
+import afterPlaying.bestTeams.infrastructure.TeamsLeaderBoardFactory;
+import afterPlaying.bestTeams.infrastructure.TeamsLeaderBoardFactory.LeaderBoardType;
 import beforePlaying.core.model.Team;
 import repos.MockedRepos;
 
@@ -24,7 +24,7 @@ public class TeamsLeaderBoardTest extends MockedRepos{
 	// b) yellow cards: p3:1, p4:1 - 0
 	@Test
 	public void goalsBothLeaderBoard() throws Exception {
-		TeamsLeaderBoard teamsGoalsLeaderBoard = TeamsLeaderBoardFactory.getTeamsLeaderBoard(LeaderBoardType.GOALS_TOTAL, historyMatchesRepo.getAllHistory());
+		ITeamsLeaderBoard teamsGoalsLeaderBoard = TeamsLeaderBoardFactory.getTeamsLeaderBoard(LeaderBoardType.GOALS_TOTAL, historyMatchesRepo.getAllHistory());
 		Multimap<Integer, Team> totalGoalsLeaderBoard = teamsGoalsLeaderBoard.createTotalLeaderBoard(teamRepo.getAllTeams());
 		
 		assertThat(totalGoalsLeaderBoard).hasSize(2);
@@ -34,7 +34,7 @@ public class TeamsLeaderBoardTest extends MockedRepos{
 	
 	@Test
 	public void yellowCardsBothLeaderBoard() throws Exception {
-		TeamsLeaderBoard teamsGoalsLeaderBoard = TeamsLeaderBoardFactory.getTeamsLeaderBoard(LeaderBoardType.YELLOW_CARDS_TOTAL, historyMatchesRepo.getAllHistory());
+		ITeamsLeaderBoard teamsGoalsLeaderBoard = TeamsLeaderBoardFactory.getTeamsLeaderBoard(LeaderBoardType.YELLOW_CARDS_TOTAL, historyMatchesRepo.getAllHistory());
 		Multimap<Integer, Team> totalGoalsLeaderBoard = teamsGoalsLeaderBoard.createTotalLeaderBoard(teamRepo.getAllTeams());
 		
 		assertThat(totalGoalsLeaderBoard).hasSize(2);

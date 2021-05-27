@@ -7,10 +7,10 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import afterPlaying.ligueTable.LigueTable;
-import afterPlaying.ligueTable.LigueTableFactory;
-import afterPlaying.ligueTable.TeamRecord;
-import afterPlaying.ligueTable.LigueTableFactory.LigueTableType;
+import afterPlaying.ligueTable.ILigueTable;
+import afterPlaying.ligueTable.core.TeamRecord;
+import afterPlaying.ligueTable.infrastructure.LigueTableFactory;
+import afterPlaying.ligueTable.infrastructure.LigueTableFactory.LigueTableType;
 import repos.MockedRepos;
 
 public class LigueTableTest extends MockedRepos{
@@ -19,7 +19,7 @@ public class LigueTableTest extends MockedRepos{
 	// Table:
 	// 1) team 6p. 5-2
 	// 2) team2 0p. 2-5
-	private LigueTable ligueTable;
+	private ILigueTable ligueTable;
 	
 	@Before
 	public void setUp() {

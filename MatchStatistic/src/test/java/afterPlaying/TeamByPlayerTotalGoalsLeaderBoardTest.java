@@ -5,9 +5,9 @@ import org.junit.Test;
 
 import com.google.common.collect.Multimap;
 
-import afterPlaying.teamStatsByPlayers.TeamByPlayerLeaderBoard;
-import afterPlaying.teamStatsByPlayers.TeamByPlayerLeaderBoardFactory;
-import afterPlaying.teamStatsByPlayers.TeamByPlayerLeaderBoardFactory.TeamByPlayerLeaderBoardType;
+import afterPlaying.teamStatsByPlayers.ITeamByPlayerLeaderBoard;
+import afterPlaying.teamStatsByPlayers.infrastructure.TeamByPlayerLeaderBoardFactory;
+import afterPlaying.teamStatsByPlayers.infrastructure.TeamByPlayerLeaderBoardFactory.TeamByPlayerLeaderBoardType;
 import beforePlaying.core.model.Player;
 
 import static org.assertj.guava.api.Assertions.assertThat;
@@ -16,7 +16,7 @@ import static org.assertj.guava.api.Assertions.entry;
 import repos.MockedRepos;
 
 public class TeamByPlayerTotalGoalsLeaderBoardTest extends MockedRepos{
-	private TeamByPlayerLeaderBoard teamByPlayerLeaderBoard;
+	private ITeamByPlayerLeaderBoard teamByPlayerLeaderBoard;
 	// 2 MATCHES
 		// 1) team vs team2 : goals 3-1, yellow cards: 0-1
 		// a) goals: p:2, p2:1 - p4:1
